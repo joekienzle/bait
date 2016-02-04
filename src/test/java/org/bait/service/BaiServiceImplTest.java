@@ -18,4 +18,16 @@ public class BaiServiceImplTest {
         baiService.createBankAccountInformation(bankAccountInformationMock);
         verify(baiRepository, times(1)).saveBankAccountInformation(bankAccountInformationMock);
     }
+
+    @Test
+    public void repositoryIsInvokedOnFind() {
+        BaiService baiService = new BaiServiceImpl();
+        BankAccountInformation bankAccountInformationMock = mock(BankAccountInformation.class);
+        BaiRepository baiRepository = mock(BaiRepository.class);
+        baiService.setBaiRepository(baiRepository);
+        String accountId = "someId";
+
+        baiService.findBankAccountInformation(accountId);
+        verify(baiRepository, times(1)).findBankAccountInformationById(accountId);
+    }
 }

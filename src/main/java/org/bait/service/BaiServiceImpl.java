@@ -13,6 +13,11 @@ public class BaiServiceImpl implements BaiService {
     }
 
     @Override
+    public BankAccountInformation findBankAccountInformation(String id) {
+        return baiRepository.findBankAccountInformationById(id);
+    }
+
+    @Override
     public void setBaiRepository(BaiRepository baiRepository) {
         this.baiRepository = baiRepository;
     }
