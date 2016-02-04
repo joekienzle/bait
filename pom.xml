@@ -63,9 +63,30 @@
         <artifactId>tomcat7-maven-plugin</artifactId>
         <version>2.2</version>
         <configuration>
-          <port>8080</port>
+          <port>7070</port>
           <path>/</path>
         </configuration>
+        <executions>
+          <!-- Start tomcat in pre integration test phase-->
+          <execution>
+            <id>tomcat-run</id>
+            <goals>
+              <goal>run-war-only</goal>
+            </goals>
+            <phase>pre-integration-test</phase>
+            <configuration>
+              <fork>true</fork>
+            </configuration>
+          </execution>
+          <!-- Stop tomcat in post integration test phase-->
+          <execution>
+            <id>tomcat-shutdown</id>
+            <goals>
+              <goal>shutdown</goal>
+            </goals>
+            <phase>post-integration-test</phase>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
@@ -89,6 +110,20 @@
               <excludes>
                 <exclude>**/*IntegrationTest.java</exclude>
               </excludes>
+            </configuration>
+          </execution>
+          <!-- Include only classes ending with IntegrationTest during integration-test maven phase -->
+          <execution>
+            <id>integration-tests</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <skip>false</skip>
+              <includes>
+                <include>**/*IntegrationTest.java</include>
+              </includes>
             </configuration>
           </execution>
         </executions>
