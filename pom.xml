@@ -19,6 +19,11 @@
       <version>2.8.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.media</groupId>
+      <artifactId>jersey-media-json-jackson</artifactId>
+      <scope>runtime</scope>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
