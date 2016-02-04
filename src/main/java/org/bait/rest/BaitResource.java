@@ -11,6 +11,10 @@ public class BaitResource {
         baiService.createBankAccountInformation(bankAccountInformation);
     }
 
+    public BankAccountInformation findBankAccountInformation(String baiId) {
+        return baiService.findBankAccountInformation(baiId);
+    }
+
     public void setBaiService(BaiService baiService) {
         this.baiService = baiService;
     }
