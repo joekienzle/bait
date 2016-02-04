@@ -1,7 +1,9 @@
 package org.bait.rest;
 
+import org.bait.db.BaiRepositoryInMemoryImpl;
 import org.bait.model.BankAccountInformation;
 import org.bait.service.BaiService;
+import org.bait.service.BaiServiceImpl;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -11,6 +13,12 @@ import javax.ws.rs.core.Response;
 public class BaitResource {
 
     private BaiService baiService;
+
+    // TODO Set up implementations manually for now. This will change when the Spring Inversion of Control Container is taking care of this.
+    public BaitResource() {
+        baiService = new BaiServiceImpl();
+        baiService.setBaiRepository(new BaiRepositoryInMemoryImpl());
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
