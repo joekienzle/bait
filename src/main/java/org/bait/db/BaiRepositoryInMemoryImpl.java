@@ -12,6 +12,7 @@ public class BaiRepositoryInMemoryImpl implements BaiRepository {
 
     @Override
     public BankAccountInformation saveBankAccountInformation(BankAccountInformation bankAccountInformation) {
+        // TODO: Using the same Object type for persistence is dangerous, I will deal with this later when including a proper persistence layer
         BankAccountInformation persistedBankAccountInformation = new BankAccountInformation();
         String id = generateUUIDString();
         persistedBankAccountInformation.setId(id);
