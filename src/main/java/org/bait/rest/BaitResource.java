@@ -1,26 +1,20 @@
 package org.bait.rest;
 
-import org.bait.db.BaiRepositoryInMemoryImpl;
 import org.bait.model.Bai;
 import org.bait.service.BaiService;
-import org.bait.service.BaiServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Controller;
 
-import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Singleton
+@Controller
 @Path("bait")
 public class BaitResource {
 
     private BaiService baiService;
-
-    // TODO Set up implementations manually for now. This will change when the Spring Inversion of Control Container is taking care of this.
-    public BaitResource() {
-        baiService = new BaiServiceImpl();
-        baiService.setBaiRepository(new BaiRepositoryInMemoryImpl());
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,6 +32,8 @@ public class BaitResource {
         return Response.ok().entity(bai).build();
     }
 
+    @Required
+    @Autowired
     public void setBaiService(final BaiService baiService) {
         this.baiService = baiService;
     }

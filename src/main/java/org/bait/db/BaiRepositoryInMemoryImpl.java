@@ -1,11 +1,13 @@
 package org.bait.db;
 
 import org.bait.model.Bai;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+@Repository
 public class BaiRepositoryInMemoryImpl implements BaiRepository {
 
     private Map<String, Bai> baiById = new HashMap<>();
