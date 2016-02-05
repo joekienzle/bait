@@ -11,7 +11,7 @@ public class BaiRepositoryInMemoryImpl implements BaiRepository {
     private Map<String, Bai> baiById = new HashMap<>();
 
     @Override
-    public Bai saveBankAccountInformation(Bai bai) {
+    public Bai saveBankAccountInformation(final Bai bai) {
         // TODO: Using the same Object type for persistence is dangerous, I will deal with this later when including a proper persistence layer
         Bai persistedBai = new Bai();
         String baiId = generateUUIDString();
@@ -24,8 +24,8 @@ public class BaiRepositoryInMemoryImpl implements BaiRepository {
     }
 
     @Override
-    public Bai findBankAccountInformationById(String id) {
-        return baiById.get(id);
+    public Bai findBankAccountInformationById(final String baiId) {
+        return baiById.get(baiId);
     }
 
     private static String generateUUIDString() {

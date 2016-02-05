@@ -8,17 +8,17 @@ public class BaiServiceImpl implements BaiService {
     BaiRepository baiRepository;
 
     @Override
-    public Bai createBankAccountInformation(Bai bai) {
+    public Bai createBankAccountInformation(final Bai bai) {
         return baiRepository.saveBankAccountInformation(bai);
     }
 
     @Override
-    public Bai findBankAccountInformation(String id) {
-        return baiRepository.findBankAccountInformationById(id);
+    public Bai findBankAccountInformation(final String baiId) {
+        return baiRepository.findBankAccountInformationById(baiId);
     }
 
     @Override
-    public void setBaiRepository(BaiRepository baiRepository) {
+    public void setBaiRepository(final BaiRepository baiRepository) {
         this.baiRepository = baiRepository;
     }
 }

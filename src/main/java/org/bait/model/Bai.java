@@ -14,7 +14,7 @@ public class Bai {
         return baiId;
     }
 
-    public void setBaiId(String baiId) {
+    public void setBaiId(final String baiId) {
         this.baiId = baiId;
     }
 
@@ -22,7 +22,7 @@ public class Bai {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(final String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -30,7 +30,7 @@ public class Bai {
         return bankNumber;
     }
 
-    public void setBankNumber(String bankNumber) {
+    public void setBankNumber(final String bankNumber) {
         this.bankNumber = bankNumber;
     }
 
@@ -38,7 +38,7 @@ public class Bai {
         return bankName;
     }
 
-    public void setBankName(String bankName) {
+    public void setBankName(final String bankName) {
         this.bankName = bankName;
     }
 }
