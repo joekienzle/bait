@@ -1,9 +1,9 @@
 package org.bait.db;
 
-import org.bait.model.BankAccountInformation;
+import org.bait.model.Bai;
 
 public interface BaiRepository {
-    BankAccountInformation saveBankAccountInformation(BankAccountInformation bankAccountInformation);
+    Bai saveBankAccountInformation(Bai bai);
 
-    BankAccountInformation findBankAccountInformationById(String id);
+    Bai findBankAccountInformationById(String id);
 }

@@ -1,6 +1,6 @@
 package org.bait.db;
 
-import org.bait.model.BankAccountInformation;
+import org.bait.model.Bai;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,16 +16,16 @@ public class BaiRepositoryInMemoryImplTest {
         String accountNumber = "1234567890";
         String bankNumber = "0987654321";
         String bankName = "My Bank";
-        BankAccountInformation bankAccountInformation = mock(BankAccountInformation.class);
-        when(bankAccountInformation.getAccountNumber()).thenReturn(accountNumber);
-        when(bankAccountInformation.getBankNumber()).thenReturn(bankNumber);
-        when(bankAccountInformation.getBankName()).thenReturn(bankName);
+        Bai bai = mock(Bai.class);
+        when(bai.getAccountNumber()).thenReturn(accountNumber);
+        when(bai.getBankNumber()).thenReturn(bankNumber);
+        when(bai.getBankName()).thenReturn(bankName);
 
-        BankAccountInformation savedBankAccountInformation = baiRepository.saveBankAccountInformation(bankAccountInformation);
-        BankAccountInformation loadedBankAccountInformation = baiRepository.findBankAccountInformationById(savedBankAccountInformation.getId());
+        Bai savedBai = baiRepository.saveBankAccountInformation(bai);
+        Bai loadedBai = baiRepository.findBankAccountInformationById(savedBai.getId());
 
-        assertEquals(accountNumber, loadedBankAccountInformation.getAccountNumber());
-        assertEquals(bankNumber, loadedBankAccountInformation.getBankNumber());
-        assertEquals(bankName, loadedBankAccountInformation.getBankName());
+        assertEquals(accountNumber, loadedBai.getAccountNumber());
+        assertEquals(bankNumber, loadedBai.getBankNumber());
+        assertEquals(bankName, loadedBai.getBankName());
     }
 }

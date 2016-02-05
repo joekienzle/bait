@@ -1,6 +1,6 @@
 package org.bait.model;
 
-public class BankAccountInformation {
+public class Bai {
 
     private String id;
 
