@@ -20,7 +20,7 @@ public class RestIntegrationTest {
 
     @Before
     public void setUp() {
-        RestAssured.basePath = "/api/bait";
+        RestAssured.basePath = "/api/bai";
         RestAssured.port = 7070;
     }
 
