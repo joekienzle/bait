@@ -5,7 +5,7 @@ import org.bait.model.Bai;
 
 public class BaiServiceImpl implements BaiService {
 
-    BaiRepository baiRepository;
+    private BaiRepository baiRepository;
 
     @Override
     public Bai createBankAccountInformation(final Bai bai) {
