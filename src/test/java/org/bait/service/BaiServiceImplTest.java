@@ -22,7 +22,6 @@ public class BaiServiceImplTest {
     @Test
     public void repositoryIsInvokedOnFind() {
         BaiService baiService = new BaiServiceImpl();
-        Bai baiMock = mock(Bai.class);
         BaiRepository baiRepository = mock(BaiRepository.class);
         baiService.setBaiRepository(baiRepository);
         String accountId = "someId";
