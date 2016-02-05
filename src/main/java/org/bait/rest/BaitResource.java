@@ -26,8 +26,8 @@ public class BaitResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBaiInfo(final Bai bai) {
-        Bai createdAccountInformation = baiService.createBankAccountInformation(bai);
-        return Response.status(Response.Status.CREATED).entity(createdAccountInformation).build();
+        Bai createdBai = baiService.createBankAccountInformation(bai);
+        return Response.status(Response.Status.CREATED).entity(createdBai).build();
     }
 
     @Path("/{baiId}")
