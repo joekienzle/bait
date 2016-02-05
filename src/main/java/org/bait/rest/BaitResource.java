@@ -5,10 +5,12 @@ import org.bait.model.BankAccountInformation;
 import org.bait.service.BaiService;
 import org.bait.service.BaiServiceImpl;
 
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Singleton
 @Path("bait")
 public class BaitResource {
 
