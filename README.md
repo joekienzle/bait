@@ -11,4 +11,4 @@ This service offers organisations that want to print and send bills via mail a w
 
 ## So when is this ready?
 
-Bait is still under development. So stay tuned for whats coming. 
+Bait is still under development. So stay tuned for whats coming or check what's beeing [worked on at overv.io](https://overv.io/workspace/jpfeifer/helpful-albatross/board/).
