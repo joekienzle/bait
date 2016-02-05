@@ -16,6 +16,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class RestIntegrationTest {
 
+    public static final String BAI_ID = "baiId";
+
     @Before
     public void setUp() {
         RestAssured.basePath = "/api/bait";
@@ -30,7 +32,7 @@ public class RestIntegrationTest {
              body("{\"accountNumber\":\"1234\",\"bankNumber\":\"56789\",\"bankName\":\"My eco bank\"}").
         then().
             statusCode(Response.Status.CREATED.getStatusCode()).
-            body("id", not(isEmptyOrNullString())).
+            body(BAI_ID, not(isEmptyOrNullString())).
         post();
     }
 
@@ -49,7 +51,7 @@ public class RestIntegrationTest {
             post()
                 .asString();
 
-        String baiId = from(returnJson).get("id");
+        String baiId = from(returnJson).get(BAI_ID);
         assertNotNull(baiId);
 
         given().
@@ -58,7 +60,7 @@ public class RestIntegrationTest {
             get("/" + baiId).
         then().
             statusCode(Response.Status.OK.getStatusCode()).
-            body("id", equalTo(baiId));
+            body(BAI_ID, equalTo(baiId));
 
     }
 }

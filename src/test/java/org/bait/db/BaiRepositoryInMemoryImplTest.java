@@ -22,7 +22,7 @@ public class BaiRepositoryInMemoryImplTest {
         when(bai.getBankName()).thenReturn(bankName);
 
         Bai savedBai = baiRepository.saveBankAccountInformation(bai);
-        Bai loadedBai = baiRepository.findBankAccountInformationById(savedBai.getId());
+        Bai loadedBai = baiRepository.findBankAccountInformationById(savedBai.getBaiId());
 
         assertEquals(accountNumber, loadedBai.getAccountNumber());
         assertEquals(bankNumber, loadedBai.getBankNumber());

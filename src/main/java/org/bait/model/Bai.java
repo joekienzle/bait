@@ -2,7 +2,7 @@ package org.bait.model;
 
 public class Bai {
 
-    private String id;
+    private String baiId;
 
     private String accountNumber;
 
@@ -10,12 +10,12 @@ public class Bai {
 
     private String bankName;
 
-    public String getId() {
-        return id;
+    public String getBaiId() {
+        return baiId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBaiId(String baiId) {
+        this.baiId = baiId;
     }
 
     public String getAccountNumber() {
