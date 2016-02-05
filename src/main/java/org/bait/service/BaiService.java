@@ -6,7 +6,7 @@ import org.bait.model.Bai;
 public interface BaiService {
     Bai createBankAccountInformation(Bai bai);
 
-    Bai findBankAccountInformation(String id);
+    Bai findBankAccountInformation(String baiId);
 
     void setBaiRepository(BaiRepository baiRepository);
 }
