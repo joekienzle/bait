@@ -1,8 +1,8 @@
 package org.bait.model;
 
-public class BankAccountInformation {
+public class Bai {
 
-    private String id;
+    private String baiId;
 
     private String accountNumber;
 
@@ -10,19 +10,19 @@ public class BankAccountInformation {
 
     private String bankName;
 
-    public String getId() {
-        return id;
+    public String getBaiId() {
+        return baiId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBaiId(final String baiId) {
+        this.baiId = baiId;
     }
 
     public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(final String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -30,7 +30,7 @@ public class BankAccountInformation {
         return bankNumber;
     }
 
-    public void setBankNumber(String bankNumber) {
+    public void setBankNumber(final String bankNumber) {
         this.bankNumber = bankNumber;
     }
 
@@ -38,7 +38,7 @@ public class BankAccountInformation {
         return bankName;
     }
 
-    public void setBankName(String bankName) {
+    public void setBankName(final String bankName) {
         this.bankName = bankName;
     }
 }

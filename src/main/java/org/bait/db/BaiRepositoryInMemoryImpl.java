@@ -1,6 +1,6 @@
 package org.bait.db;
 
-import org.bait.model.BankAccountInformation;
+import org.bait.model.Bai;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,24 +8,24 @@ import java.util.UUID;
 
 public class BaiRepositoryInMemoryImpl implements BaiRepository {
 
-    private Map<String, BankAccountInformation> baiById = new HashMap<>();
+    private Map<String, Bai> baiById = new HashMap<>();
 
     @Override
-    public BankAccountInformation saveBankAccountInformation(BankAccountInformation bankAccountInformation) {
+    public Bai saveBankAccountInformation(final Bai bai) {
         // TODO: Using the same Object type for persistence is dangerous, I will deal with this later when including a proper persistence layer
-        BankAccountInformation persistedBankAccountInformation = new BankAccountInformation();
-        String id = generateUUIDString();
-        persistedBankAccountInformation.setId(id);
-        persistedBankAccountInformation.setAccountNumber(bankAccountInformation.getAccountNumber());
-        persistedBankAccountInformation.setBankNumber(bankAccountInformation.getBankNumber());
-        persistedBankAccountInformation.setBankName(bankAccountInformation.getBankName());
-        baiById.put(id, persistedBankAccountInformation);
-        return persistedBankAccountInformation;
+        Bai persistedBai = new Bai();
+        String baiId = generateUUIDString();
+        persistedBai.setBaiId(baiId);
+        persistedBai.setAccountNumber(bai.getAccountNumber());
+        persistedBai.setBankNumber(bai.getBankNumber());
+        persistedBai.setBankName(bai.getBankName());
+        baiById.put(baiId, persistedBai);
+        return persistedBai;
     }
 
     @Override
-    public BankAccountInformation findBankAccountInformationById(String id) {
-        return baiById.get(id);
+    public Bai findBankAccountInformationById(final String baiId) {
+        return baiById.get(baiId);
     }
 
     private static String generateUUIDString() {

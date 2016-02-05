@@ -1,7 +1,7 @@
 package org.bait.rest;
 
 import org.bait.db.BaiRepositoryInMemoryImpl;
-import org.bait.model.BankAccountInformation;
+import org.bait.model.Bai;
 import org.bait.service.BaiService;
 import org.bait.service.BaiServiceImpl;
 
@@ -25,20 +25,20 @@ public class BaitResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createBaiInfo(BankAccountInformation bankAccountInformation) {
-        BankAccountInformation createdAccountInformation = baiService.createBankAccountInformation(bankAccountInformation);
+    public Response createBaiInfo(final Bai bai) {
+        Bai createdAccountInformation = baiService.createBankAccountInformation(bai);
         return Response.status(Response.Status.CREATED).entity(createdAccountInformation).build();
     }
 
     @Path("/{baiId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findBankAccountInformation(@PathParam("baiId") String baiId) {
-        BankAccountInformation bankAccountInformation = baiService.findBankAccountInformation(baiId);
-        return Response.ok().entity(bankAccountInformation).build();
+    public Response findBankAccountInformation(@PathParam("baiId") final  String baiId) {
+        Bai bai = baiService.findBankAccountInformation(baiId);
+        return Response.ok().entity(bai).build();
     }
 
-    public void setBaiService(BaiService baiService) {
+    public void setBaiService(final BaiService baiService) {
         this.baiService = baiService;
     }
 }
