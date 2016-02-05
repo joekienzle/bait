@@ -13,8 +13,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Controller
-@Path("bait")
-@Api
+@Path("bai")
+@Api("Bait Service")
 public class BaitResource {
 
     private BaiService baiService;
