@@ -2,13 +2,15 @@ package org.bait.rest;
 
 import org.bait.model.Bai;
 import org.bait.service.BaiService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.stereotype.Controller;
 
-import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Singleton
+@Controller
 @Path("bait")
 public class BaitResource {
 
@@ -30,6 +32,8 @@ public class BaitResource {
         return Response.ok().entity(bai).build();
     }
 
+    @Required
+    @Autowired
     public void setBaiService(final BaiService baiService) {
         this.baiService = baiService;
     }
