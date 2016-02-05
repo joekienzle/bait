@@ -18,10 +18,22 @@
     <servlet-name>Bait-Server</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
+      <param-name>jersey.config.server.provider.packages</param-name>
+      <param-value>
+        io.swagger.jaxrs.listing,
+        org.bait.rs
+      </param-value>
+    </init-param>
+    <init-param>
       <param-name>javax.ws.rs.Application</param-name>
       <param-value>org.bait.config.JerseyConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <servlet-name>Jersey2Config</servlet-name>
+    <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>Bait-Server</servlet-name>
