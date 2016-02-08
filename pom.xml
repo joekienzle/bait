@@ -168,7 +168,7 @@
             <configuration>
               <skip>false</skip>
               <excludes>
-                <exclude>**/*IntegrationTest.java</exclude>
+                <exclude>**/*RestIntegrationTest.java</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -182,7 +182,7 @@
             <configuration>
               <skip>false</skip>
               <includes>
-                <include>**/*IntegrationTest.java</include>
+                <include>**/*RestIntegrationTest.java</include>
               </includes>
             </configuration>
           </execution>
