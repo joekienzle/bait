@@ -13,12 +13,12 @@ public class BaiServiceImpl implements BaiService {
 
     @Override
     public Bai createBankAccountInformation(final Bai bai) {
-        return baiRepository.saveBankAccountInformation(bai);
+        return baiRepository.save(bai);
     }
 
     @Override
     public Bai findBankAccountInformation(final String baiId) {
-        return baiRepository.findBankAccountInformationById(baiId);
+        return baiRepository.findOne(baiId);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class BaiServiceImplTest {
         baiService.setBaiRepository(baiRepository);
 
         baiService.createBankAccountInformation(baiMock);
-        verify(baiRepository, times(1)).saveBankAccountInformation(baiMock);
+        verify(baiRepository, times(1)).save(baiMock);
     }
 
     @Test
@@ -27,6 +27,6 @@ public class BaiServiceImplTest {
         String accountId = "someId";
 
         baiService.findBankAccountInformation(accountId);
-        verify(baiRepository, times(1)).findBankAccountInformationById(accountId);
+        verify(baiRepository, times(1)).findOne(accountId);
     }
 }
