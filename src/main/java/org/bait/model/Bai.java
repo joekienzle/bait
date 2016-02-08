@@ -1,7 +1,14 @@
 package org.bait.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Bai")
 public class Bai {
 
+    @Id
+    @Column(name="baiId")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private String baiId;
 
     private String accountNumber;

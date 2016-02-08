@@ -8,6 +8,7 @@
   <packaging>war</packaging>
 
   <dependencies>
+    <!-- Jersey -->
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet-core</artifactId>
@@ -17,29 +18,62 @@
       <artifactId>jersey-media-json-jackson</artifactId>
       <scope>runtime</scope>
     </dependency>
+
+    <!-- Spring -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-jpa</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
       <artifactId>jersey-spring3</artifactId>
     </dependency>
 
+    <!-- Hibernate -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
     </dependency>
 
+    <!-- DB Vendors -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.191</version>
+    </dependency>
+
+    <!-- Swagger -->
     <dependency>
       <groupId>io.swagger</groupId>
       <artifactId>swagger-jersey2-jaxrs</artifactId>
       <version>1.5.0</version>
     </dependency>
 
+    <!-- Test dependencies -->
     <dependency>
       <groupId>com.jayway.restassured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>2.8.0</version>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-all</artifactId>
+      <version>2.4.5</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -50,6 +84,11 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
       <version>1.10.19</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -64,9 +103,9 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>4.2.4.RELEASE</version>
+        <groupId>io.spring.platform</groupId>
+        <artifactId>platform-bom</artifactId>
+        <version>1.1.2.RELEASE</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -135,7 +174,7 @@
             <configuration>
               <skip>false</skip>
               <excludes>
-                <exclude>**/*IntegrationTest.java</exclude>
+                <exclude>**/*RestIntegrationTest.java</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -149,7 +188,7 @@
             <configuration>
               <skip>false</skip>
               <includes>
-                <include>**/*IntegrationTest.java</include>
+                <include>**/*RestIntegrationTest.java</include>
               </includes>
             </configuration>
           </execution>
