@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @ComponentScan(SpringConfig.PACKAGE_SCAN_PATH)
@@ -28,8 +27,8 @@ public class SpringConfig {
 
     @Bean
     public DataSource dataSource() {
-        EmbeddedDatabaseBuilder embeddedDatabaseBuilder = new EmbeddedDatabaseBuilder();
-        return embeddedDatabaseBuilder.setType(EmbeddedDatabaseType.H2).build();
+        EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
+        return databaseBuilder.setType(EmbeddedDatabaseType.H2).build();
     }
 
     @Bean
@@ -44,10 +43,10 @@ public class SpringConfig {
     }
 
     private HibernateJpaVendorAdapter createHibernateJpaVendorAdapter() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setGenerateDdl(true);
-        hibernateJpaVendorAdapter.setShowSql(true);
-        return hibernateJpaVendorAdapter;
+        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setShowSql(true);
+        return jpaVendorAdapter;
     }
 
     @Bean
