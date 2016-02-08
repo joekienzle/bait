@@ -1,8 +1,11 @@
 package org.bait.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -19,11 +22,18 @@ import javax.sql.DataSource;
 @ComponentScan(SpringConfig.PACKAGE_SCAN_PATH)
 @EnableJpaRepositories(basePackages = SpringConfig.JPA_PACKAGE_PATH)
 @EnableTransactionManagement
+@PropertySource("classpath:app.properties")
 public class SpringConfig {
 
     public static final String PACKAGE_SCAN_PATH = "org.bait";
 
     public static final String JPA_PACKAGE_PATH = "org.bait";
+
+    @Value("${db.show_sql:false}")
+    private Boolean showSql;
+
+    @Value("${db.createDatabaseStructure:true}")
+    private Boolean createDbStructure;
 
     @Bean
     public DataSource dataSource() {
@@ -44,8 +54,8 @@ public class SpringConfig {
 
     private HibernateJpaVendorAdapter createHibernateJpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setGenerateDdl(true);
-        jpaVendorAdapter.setShowSql(true);
+        jpaVendorAdapter.setGenerateDdl(createDbStructure);
+        jpaVendorAdapter.setShowSql(showSql);
         return jpaVendorAdapter;
     }
 
@@ -55,4 +65,10 @@ public class SpringConfig {
         transactionManager.setEntityManagerFactory(entityManagerFactory());
         return transactionManager;
     }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
 }
