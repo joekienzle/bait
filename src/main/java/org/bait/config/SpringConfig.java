@@ -1,5 +1,6 @@
 package org.bait.config;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,8 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -20,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(SpringConfig.PACKAGE_SCAN_PATH)
-@EnableJpaRepositories(basePackages = SpringConfig.JPA_PACKAGE_PATH)
+@EnableJpaRepositories(SpringConfig.JPA_PACKAGE_PATH)
 @EnableTransactionManagement
 @PropertySource("classpath:app.properties")
 public class SpringConfig {
@@ -29,16 +28,32 @@ public class SpringConfig {
 
     public static final String JPA_PACKAGE_PATH = "org.bait";
 
-    @Value("${db.show_sql:false}")
+    @Value("${db.showSql:false}")
     private Boolean showSql;
 
     @Value("${db.createDatabaseStructure:true}")
     private Boolean createDbStructure;
 
+    @Value("${db.jdbc.url:jdbc:h2:mem:database}")
+    private String dbUrl;
+
+    @Value("${db.jdbc.driverClassName:org.h2.Driver}")
+    private String dbDriverClassName;
+
+    @Value("${db.jdbc.username:someUser}")
+    private String dbUsername;
+
+    @Value("${db.jdbc.password:somePassword}")
+    private String dbPassword;
+
     @Bean
     public DataSource dataSource() {
-        EmbeddedDatabaseBuilder databaseBuilder = new EmbeddedDatabaseBuilder();
-        return databaseBuilder.setType(EmbeddedDatabaseType.H2).build();
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(dbUrl);
+        dataSource.setDriverClassName(dbDriverClassName);
+        dataSource.setUsername(dbUsername);
+        dataSource.setPassword(dbPassword);
+        return dataSource;
     }
 
     @Bean
