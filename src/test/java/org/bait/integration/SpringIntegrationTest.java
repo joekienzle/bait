@@ -7,7 +7,6 @@ import org.bait.service.BaiService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -42,7 +41,7 @@ public class SpringIntegrationTest {
         assertEquals(bankName, loadedBai.getBankName());
     }
 
-    private Bai createBai(String accountNumber, String bankNumber, String bankName) {
+    private Bai createBai(final String accountNumber,final  String bankNumber,final  String bankName) {
         Bai bai = new Bai();
         bai.setAccountNumber(accountNumber);
         bai.setBankNumber(bankNumber);
