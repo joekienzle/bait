@@ -11,6 +11,6 @@ public interface BaiRepository extends JpaRepository<Bai, String> {
 
     Bai findOne(String baiId);
 
-    void delete(Bai deleted);
+    void deleteByBaiId(String baiId);
 
 }

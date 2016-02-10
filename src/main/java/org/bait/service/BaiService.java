@@ -9,4 +9,6 @@ public interface BaiService {
     Bai findBankAccountInformation(String baiId);
 
     void setBaiRepository(BaiRepository baiRepository);
+
+    void deleteBankAccountInformation(String baiId);
 }
