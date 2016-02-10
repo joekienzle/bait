@@ -57,11 +57,11 @@ public class SpringConfig {
     }
 
     @Bean
-    public EntityManagerFactory entityManagerFactory() {
+    public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setJpaVendorAdapter(createHibernateJpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan(JPA_PACKAGE_PATH);
-        entityManagerFactoryBean.setDataSource(dataSource());
+        entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.afterPropertiesSet();
 
         return entityManagerFactoryBean.getObject();
@@ -75,10 +75,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory());
-        return transactionManager;
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean
