@@ -1,5 +1,7 @@
 package org.bait.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,7 +10,8 @@ public class Bai {
 
     @Id
     @Column(name="baiId")
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(generator="hibernate-uuid")
+    @GenericGenerator(name="hibernate-uuid", strategy = "uuid2")
     private String baiId;
 
     private String accountNumber;
