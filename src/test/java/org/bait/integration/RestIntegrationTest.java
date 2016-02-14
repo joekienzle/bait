@@ -63,4 +63,46 @@ public class RestIntegrationTest {
             body(BAI_ID, equalTo(baiId));
 
     }
+
+    @Test
+    public void postAndDeleteBankAccountInformation() throws Exception {
+        String accountNumber = "1234";
+        String bankNumber = "56789";
+        String bankName = "My eco bank";
+        String returnJson =
+                given().
+                        contentType(MediaType.APPLICATION_JSON).
+                        when().
+                        body("{\"accountNumber\":\"" + accountNumber + "\",\"bankNumber\":\"" + bankNumber + "\",\"bankName\":\"" + bankName + "\"}").
+                        then().
+                        statusCode(Response.Status.CREATED.getStatusCode()).
+                        post()
+                        .asString();
+
+        String baiId = from(returnJson).get(BAI_ID);
+        assertNotNull(baiId);
+
+        given().
+                accept(MediaType.APPLICATION_JSON).
+                when().
+                get("/" + baiId).
+                then().
+                statusCode(Response.Status.OK.getStatusCode()).
+                body(BAI_ID, equalTo(baiId));
+
+        given().
+                accept(MediaType.APPLICATION_JSON).
+                when().
+                delete("/" + baiId).
+                then().
+                statusCode(Response.Status.NO_CONTENT.getStatusCode());
+
+        given().
+                accept(MediaType.APPLICATION_JSON).
+                when().
+                get("/" + baiId).
+                then().
+                statusCode(Response.Status.NOT_FOUND.getStatusCode());
+
+    }
 }
