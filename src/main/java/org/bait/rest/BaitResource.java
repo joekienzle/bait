@@ -38,7 +38,17 @@ public class BaitResource {
             response = Bai.class)
     public Response findBankAccountInformation(@PathParam("baiId") final  String baiId) {
         Bai bai = baiService.findBankAccountInformation(baiId);
+        if (bai == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
         return Response.ok().entity(bai).build();
+    }
+
+    @Path("/{baiId}")
+    @DELETE
+    public Response deleteBaiInfo(@PathParam("baiId") final String baiId) {
+        baiService.deleteBankAccountInformation(baiId);
+        return Response.noContent().build();
     }
 
     @Required
