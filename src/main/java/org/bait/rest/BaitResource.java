@@ -44,9 +44,9 @@ public class BaitResource {
         return Response.ok().entity(bai).build();
     }
 
-    @Path("/{baidId}")
+    @Path("/{baiId}")
     @DELETE
-    public Response deleteBaiInfo(String baiId) {
+    public Response deleteBaiInfo(@PathParam("baiId") final String baiId) {
         baiService.deleteBankAccountInformation(baiId);
         return Response.noContent().build();
     }
