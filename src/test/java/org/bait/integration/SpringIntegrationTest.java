@@ -30,69 +30,43 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiServiceWriteAndReadTest() {
-        String accountNumber = "accountNumber" + createUuid();
-        String bankNumber = "bankNumber" + createUuid();
-        String bankName = "bankName" + createUuid();
-        Bai bai = createBai(accountNumber, bankNumber, bankName);
+        Bai bai = createBai("accountNumber" + createUuid(), "bankNumber" + createUuid(), "bankName" + createUuid());
         Bai persistedBai = baiService.createBankAccountInformation(bai);
         assertNotNull(persistedBai);
         String baiId = persistedBai.getBaiId();
         assertNotNull(baiId);
-        Bai loadedBai = baiService.findBankAccountInformation(baiId);
-        assertEquals(accountNumber, loadedBai.getAccountNumber());
-        assertEquals(bankNumber, loadedBai.getBankNumber());
-        assertEquals(bankName, loadedBai.getBankName());
+        compareBai(bai, baiService.findBankAccountInformation(baiId));
     }
 
     @Test
     public void baiServiceMultipleWriteAndReadTest() {
-        String accountNumberOne = "accountNumberOne" + createUuid();
-        String bankNumberOne = "bankNumberOne" + createUuid();
-        String bankNameOne = "bankNameOne" + createUuid();
-        Bai baiOne = createBai(accountNumberOne, bankNumberOne, bankNameOne);
+        Bai baiOne = createBai("accountNumberOne" + createUuid(), "bankNumberOne" + createUuid(), "bankNameOne" + createUuid());
         Bai persistedBaiOne = baiService.createBankAccountInformation(baiOne);
         assertNotNull(persistedBaiOne);
         String baiOneId = persistedBaiOne.getBaiId();
         assertNotNull(baiOneId);
 
-        String accountNumberTwo = "accountNumberTwo" + createUuid();
-        String bankNumberTwo = "bankNumberTwo" + createUuid();
-        String bankNameTwo = "bankNameTwo" + createUuid();
-        Bai baiTwo = createBai(accountNumberTwo, bankNumberTwo, bankNameTwo);
+        Bai baiTwo = createBai("accountNumberTwo" + createUuid(), "bankNumberTwo" + createUuid(), "bankNameTwo" + createUuid());
         Bai persistedBaiTwo = baiService.createBankAccountInformation(baiTwo);
         assertNotNull(persistedBaiTwo);
         String baiTwoId = persistedBaiTwo.getBaiId();
         assertNotNull(baiTwoId);
 
-        Bai loadedBaiOne = baiService.findBankAccountInformation(baiOneId);
-        assertEquals(accountNumberOne, loadedBaiOne.getAccountNumber());
-        assertEquals(bankNumberOne, loadedBaiOne.getBankNumber());
-        assertEquals(bankNameOne, loadedBaiOne.getBankName());
-
-        Bai loadedBaiTwo = baiService.findBankAccountInformation(baiTwoId);
-        assertEquals(accountNumberTwo, loadedBaiTwo.getAccountNumber());
-        assertEquals(bankNumberTwo, loadedBaiTwo.getBankNumber());
-        assertEquals(bankNameTwo, loadedBaiTwo.getBankName());
+        compareBai(baiOne, baiService.findBankAccountInformation(baiOneId));
+        compareBai(baiTwo, baiService.findBankAccountInformation(baiTwoId));
     }
 
     @Test
     public void baiServiceWriteAndDeleteTest() {
-        String accountNumber = "accountNumber" + createUuid();
-        String bankNumber = "bankNumber"  + createUuid();
-        String bankName = "bankName" +  createUuid();
-        Bai bai = createBai(accountNumber, bankNumber, bankName);
+        Bai bai = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
         Bai persistedBai = baiService.createBankAccountInformation(bai);
         assertNotNull(persistedBai);
         String baiId = persistedBai.getBaiId();
         assertNotNull(baiId);
-        Bai loadedBai = baiService.findBankAccountInformation(baiId);
-        assertEquals(accountNumber, loadedBai.getAccountNumber());
-        assertEquals(bankNumber, loadedBai.getBankNumber());
-        assertEquals(bankName, loadedBai.getBankName());
+        compareBai(bai, baiService.findBankAccountInformation(baiId));
 
         baiService.deleteBankAccountInformation(baiId);
-        loadedBai = baiService.findBankAccountInformation(baiId);
-        assertNull(loadedBai);
+        assertNull(baiService.findBankAccountInformation(baiId));
     }
 
     @Test
@@ -103,10 +77,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiResourceWriteTest() {
-        String accountNumber = "123456";
-        String bankNumber = "7890";
-        String bankName = "my bank name";
-        Bai bai = createBai(accountNumber, bankNumber, bankName);
+        Bai bai = createBai("123456", "7890", "my bank name");
 
         Response response = baitResource.createBaiInfo(bai);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
@@ -122,5 +93,11 @@ public class SpringIntegrationTest {
         bai.setBankNumber(bankNumber);
         bai.setBankName(bankName);
         return bai;
+    }
+
+    private void compareBai(Bai expected, Bai actual) {
+        assertEquals(expected.getAccountNumber(), actual.getAccountNumber());
+        assertEquals(expected.getBankNumber(), actual.getBankNumber());
+        assertEquals(expected.getBankName(), actual.getBankName());
     }
 }
