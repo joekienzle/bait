@@ -7,6 +7,8 @@ import org.junit.Test;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.util.UUID;
+
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import static org.hamcrest.Matchers.equalTo;
@@ -34,6 +36,17 @@ public class RestIntegrationTest {
             statusCode(Response.Status.CREATED.getStatusCode()).
             body(BAI_ID, not(isEmptyOrNullString())).
         post();
+    }
+
+    @Test
+    public void getNoBankAccountInformation() throws Exception {
+        given().
+            accept(MediaType.APPLICATION_JSON).
+        when().
+            get("/" + UUID.randomUUID().toString()).
+        then().
+            statusCode(Response.Status.NOT_FOUND.getStatusCode());
+
     }
 
     @Test
