@@ -25,7 +25,7 @@ public class BaiServiceImpl implements BaiService {
 
     @Override
     @Transactional
-    public void deleteBankAccountInformation(String baiId) {
+    public void deleteBankAccountInformation(final String baiId) {
         baiRepository.deleteByBaiId(baiId);
     }
 
