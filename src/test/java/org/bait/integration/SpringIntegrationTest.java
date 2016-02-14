@@ -95,7 +95,7 @@ public class SpringIntegrationTest {
         return bai;
     }
 
-    private void compareBai(Bai expected, Bai actual) {
+    private void compareBai(final Bai expected, final Bai actual) {
         assertEquals(expected.getAccountNumber(), actual.getAccountNumber());
         assertEquals(expected.getBankNumber(), actual.getBankNumber());
         assertEquals(expected.getBankName(), actual.getBankName());
