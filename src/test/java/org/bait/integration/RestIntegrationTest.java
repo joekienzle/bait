@@ -85,11 +85,11 @@ public class RestIntegrationTest {
         String returnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
-                        when().
+                when().
                         body("{\"accountNumber\":\"" + accountNumber + "\",\"bankNumber\":\"" + bankNumber + "\",\"bankName\":\"" + bankName + "\"}").
-                        then().
+                then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                        post()
+                post()
                         .asString();
 
         String baiId = from(returnJson).get(BAI_ID);
@@ -97,24 +97,24 @@ public class RestIntegrationTest {
 
         given().
                 accept(MediaType.APPLICATION_JSON).
-                when().
+        when().
                 get("/" + baiId).
-                then().
+        then().
                 statusCode(Response.Status.OK.getStatusCode()).
                 body(BAI_ID, equalTo(baiId));
 
         given().
                 accept(MediaType.APPLICATION_JSON).
-                when().
+        when().
                 delete("/" + baiId).
-                then().
+        then().
                 statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
         given().
                 accept(MediaType.APPLICATION_JSON).
-                when().
+        when().
                 get("/" + baiId).
-                then().
+        then().
                 statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
     }
