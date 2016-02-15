@@ -9,7 +9,6 @@ import org.bait.service.TransferInfoService;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;

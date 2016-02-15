@@ -2,7 +2,6 @@ package org.bait.service;
 
 import org.bait.db.BaiRepository;
 import org.bait.db.model.BaiDbImpl;
-import org.bait.model.Bai;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;

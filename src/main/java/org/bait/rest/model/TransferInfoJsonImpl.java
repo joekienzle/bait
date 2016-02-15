@@ -1,6 +1,5 @@
 package org.bait.rest.model;
 
-import org.bait.model.Bai;
 import org.bait.model.TransferInfo;
 
 public class TransferInfoJsonImpl implements TransferInfo {

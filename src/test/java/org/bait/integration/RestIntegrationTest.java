@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.UUID;
 
 import static com.jayway.restassured.RestAssured.given;

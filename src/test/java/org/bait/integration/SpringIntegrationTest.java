@@ -1,9 +1,6 @@
 package org.bait.integration;
 
-import com.google.common.base.Strings;
 import org.bait.config.SpringConfig;
-import org.bait.db.model.BaiDbImpl;
-import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.model.Bai;
 import org.bait.model.TransferInfo;
 import org.bait.rest.BaitResource;
@@ -11,7 +8,6 @@ import org.bait.rest.model.BaiJsonImpl;
 import org.bait.rest.model.TransferInfoJsonImpl;
 import org.bait.service.BaiService;
 import org.bait.service.TransferInfoService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +20,6 @@ import java.util.UUID;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {SpringConfig.class})
