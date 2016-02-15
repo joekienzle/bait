@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.bait.model.Bai;
 import org.bait.rest.model.BaiJsonImpl;
-import org.bait.rest.service.BaiModelConverter;
 import org.bait.service.api.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -29,7 +28,7 @@ public class BaitResource {
             response = BaiJsonImpl.class)
     public Response createBaiInfo(final BaiJsonImpl baiJsonImpl) {
         Bai createdBai = baiService.createBankAccountInformation(baiJsonImpl);
-        return Response.status(Response.Status.CREATED).entity(BaiModelConverter.convert(createdBai)).build();
+        return Response.status(Response.Status.CREATED).entity(convertToJson(createdBai)).build();
     }
 
     @Path("/{baiId}")
@@ -43,7 +42,7 @@ public class BaitResource {
         if (bai == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(BaiModelConverter.convert(bai)).build();
+        return Response.ok().entity(convertToJson(bai)).build();
     }
 
     @Path("/{baiId}")
@@ -51,6 +50,15 @@ public class BaitResource {
     public Response deleteBaiInfo(@PathParam("baiId") final String baiId) {
         baiService.deleteBankAccountInformation(baiId);
         return Response.noContent().build();
+    }
+
+    public static BaiJsonImpl convertToJson(final Bai bai) {
+        BaiJsonImpl baiJsonImpl = new BaiJsonImpl();
+        baiJsonImpl.setBaiId(bai.getBaiId());
+        baiJsonImpl.setAccountNumber(bai.getAccountNumber());
+        baiJsonImpl.setBankNumber(bai.getBankNumber());
+        baiJsonImpl.setBankName(bai.getBankName());
+        return baiJsonImpl;
     }
 
     @Required
