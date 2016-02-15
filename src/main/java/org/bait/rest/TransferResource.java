@@ -2,7 +2,7 @@ package org.bait.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.bait.model.TransferInfo;
+import org.bait.db.TransferInfoImpl;
 import org.bait.service.TransferInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -24,10 +24,10 @@ public class TransferResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Creates a new reference to transfer information",
-            response = TransferInfo.class)
-    public Response createTransferInfo(final TransferInfo transferInfo) {
-        TransferInfo createdTransferInfo = transferInfoService.createTransferInformation(transferInfo);
-        return Response.status(Response.Status.CREATED).entity(createdTransferInfo).build();
+            response = TransferInfoImpl.class)
+    public Response createTransferInfo(final TransferInfoImpl transferInfoImpl) {
+        TransferInfoImpl createdTransferInfoImpl = transferInfoService.createTransferInformation(transferInfoImpl);
+        return Response.status(Response.Status.CREATED).entity(createdTransferInfoImpl).build();
     }
 
     @Path("/{transferInfoId}")
@@ -35,13 +35,13 @@ public class TransferResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Get the bank account information by ID",
-            response = TransferInfo.class)
+            response = TransferInfoImpl.class)
     public Response getTransferInfo(@PathParam("transferInfoId") final String transferInfoId) {
-        TransferInfo transferInfo = transferInfoService.findTransferInfo(transferInfoId);
-        if (transferInfo == null) {
+        TransferInfoImpl transferInfoImpl = transferInfoService.findTransferInfo(transferInfoId);
+        if (transferInfoImpl == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(transferInfo).build();
+        return Response.ok().entity(transferInfoImpl).build();
     }
 
     @Required

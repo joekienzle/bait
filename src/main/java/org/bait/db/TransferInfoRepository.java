@@ -1,15 +1,14 @@
 package org.bait.db;
 
-import org.bait.model.TransferInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransferInfoRepository extends JpaRepository<TransferInfo, String> {
+public interface TransferInfoRepository extends JpaRepository<TransferInfoImpl, String> {
 
-    TransferInfo save(TransferInfo transferInfo);
+    TransferInfoImpl save(TransferInfoImpl transferInfoImpl);
 
-    TransferInfo findOne(String transferId);
+    TransferInfoImpl findOne(String transferId);
 
     void deleteByTransferId(String transferId);
 

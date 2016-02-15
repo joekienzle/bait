@@ -1,6 +1,6 @@
 package org.bait.rs;
 
-import org.bait.model.Bai;
+import org.bait.db.BaiImpl;
 import org.bait.rest.BaitResource;
 import org.bait.service.BaiService;
 import org.junit.Test;
@@ -17,23 +17,23 @@ public class BaitResourceTest {
     public void createBaiInfo() {
         BaitResource baitResource = new BaitResource();
         BaiService baiServiceMock = mock(BaiService.class);
-        Bai baiMock = mock(Bai.class);
-        when(baiServiceMock.createBankAccountInformation(baiMock)).thenReturn(baiMock);
+        BaiImpl baiImplMock = mock(BaiImpl.class);
+        when(baiServiceMock.createBankAccountInformation(baiImplMock)).thenReturn(baiImplMock);
         baitResource.setBaiService(baiServiceMock);
-        Response response = baitResource.createBaiInfo(baiMock);
+        Response response = baitResource.createBaiInfo(baiImplMock);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
-        verify(baiServiceMock, times(1)).createBankAccountInformation(baiMock);
+        verify(baiServiceMock, times(1)).createBankAccountInformation(baiImplMock);
     }
 
     @Test
     public void getBaiInfo() {
         BaitResource baitResource = new BaitResource();
         BaiService baiServiceMock = mock(BaiService.class);
-        Bai baiMock = mock(Bai.class);
+        BaiImpl baiImplMock = mock(BaiImpl.class);
         baitResource.setBaiService(baiServiceMock);
         String someId = "someId";
-        when(baiServiceMock.findBankAccountInformation(someId)).thenReturn(baiMock);
+        when(baiServiceMock.findBankAccountInformation(someId)).thenReturn(baiImplMock);
 
         Response response = baitResource.findBankAccountInformation(someId);
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());

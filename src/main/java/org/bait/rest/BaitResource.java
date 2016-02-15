@@ -2,7 +2,7 @@ package org.bait.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.bait.model.Bai;
+import org.bait.db.BaiImpl;
 import org.bait.service.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -24,10 +24,10 @@ public class BaitResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Creates a new reference to bank account information",
-            response = Bai.class)
-    public Response createBaiInfo(final Bai bai) {
-        Bai createdBai = baiService.createBankAccountInformation(bai);
-        return Response.status(Response.Status.CREATED).entity(createdBai).build();
+            response = BaiImpl.class)
+    public Response createBaiInfo(final BaiImpl baiImpl) {
+        BaiImpl createdBaiImpl = baiService.createBankAccountInformation(baiImpl);
+        return Response.status(Response.Status.CREATED).entity(createdBaiImpl).build();
     }
 
     @Path("/{baiId}")
@@ -35,13 +35,13 @@ public class BaitResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Get the bank account information by ID",
-            response = Bai.class)
+            response = BaiImpl.class)
     public Response findBankAccountInformation(@PathParam("baiId") final  String baiId) {
-        Bai bai = baiService.findBankAccountInformation(baiId);
-        if (bai == null) {
+        BaiImpl baiImpl = baiService.findBankAccountInformation(baiId);
+        if (baiImpl == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(bai).build();
+        return Response.ok().entity(baiImpl).build();
     }
 
     @Path("/{baiId}")

@@ -1,15 +1,15 @@
-package org.bait.model;
+package org.bait.db;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="Transfer")
-public class TransferInfo {
+@Table(name="TransferInfo")
+public class TransferInfoImpl {
 
-    @ManyToOne(targetEntity = Bai.class)
-    private Bai bai;
+    @ManyToOne(targetEntity = BaiImpl.class)
+    private BaiImpl baiImpl;
 
     @Id
     @Column(name="transferId")
@@ -21,12 +21,12 @@ public class TransferInfo {
 
     private String amount;
 
-    public Bai getBai() {
-        return bai;
+    public BaiImpl getBaiImpl() {
+        return baiImpl;
     }
 
-    public void setBai(Bai bai) {
-        this.bai = bai;
+    public void setBaiImpl(BaiImpl baiImpl) {
+        this.baiImpl = baiImpl;
     }
 
     public String getTransferId() {

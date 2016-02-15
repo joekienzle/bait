@@ -1,4 +1,4 @@
-package org.bait.model;
+package org.bait.db;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Bai")
-public class Bai {
+public class BaiImpl {
 
     @Id
     @Column(name="baiId")
