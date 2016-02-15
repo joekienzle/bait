@@ -18,7 +18,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class RestIntegrationTest {
 
-    public static final String BAI_ID_JSON_FIELD = "baiId";
+    public static final String BAI_RESOURCE = "bai";
+
+    public static final String BAI_ID_JSON_FIELD = BAI_RESOURCE + "Id";
 
     public static final String ACCOUNT_NUMBER_JSON_FIELD = "accountNumber";
 
@@ -30,7 +32,9 @@ public class RestIntegrationTest {
 
     public static final String SUBJECT_JSON_FIELD = "subject";
 
-    public static final String TRANSFER_ID_JSON_FIELD = "transferId";
+    public static final String TRANSFER_RESOURCE = "transfer";
+
+    public static final String TRANSFER_ID_JSON_FIELD = TRANSFER_RESOURCE + "Id";
 
     public static JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
 
@@ -45,8 +49,8 @@ public class RestIntegrationTest {
         given().
             contentType(MediaType.APPLICATION_JSON).
         when().
-             body(buildBaiJson("1234", "56789", "My eco bank")).
-             post("/bai").
+             body(buildBaiJson()).
+             post("/" + BAI_RESOURCE).
         then().
             statusCode(Response.Status.CREATED.getStatusCode()).
             body(BAI_ID_JSON_FIELD, not(isEmptyOrNullString()));
@@ -57,7 +61,7 @@ public class RestIntegrationTest {
         given().
             accept(MediaType.APPLICATION_JSON).
         when().
-            get("/bai/" + UUID.randomUUID().toString()).
+            get("/" + BAI_RESOURCE + "/" + UUID.randomUUID().toString()).
         then().
             statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
@@ -75,7 +79,7 @@ public class RestIntegrationTest {
                  body(buildBaiJson(accountNumber, bankNumber, bankName)).
             then().
                 statusCode(Response.Status.CREATED.getStatusCode()).
-            post("/bai").
+            post("/" + BAI_RESOURCE).
                 body().asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
@@ -84,7 +88,7 @@ public class RestIntegrationTest {
         given().
             accept(MediaType.APPLICATION_JSON).
         when().
-            get("/bai/" + baiId).
+            get("/" + BAI_RESOURCE + "/" + baiId).
         then().
             statusCode(Response.Status.OK.getStatusCode()).
             body(BAI_ID_JSON_FIELD, equalTo(baiId)).
@@ -96,17 +100,14 @@ public class RestIntegrationTest {
 
     @Test
     public void postAndDeleteBankAccountInformation() throws Exception {
-        String accountNumber = "1234";
-        String bankNumber = "56789";
-        String bankName = "My eco bank";
         String returnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildBaiJson(accountNumber, bankNumber, bankName)).
+                        body(buildBaiJson()).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/bai")
+                post("/" + BAI_RESOURCE)
                         .asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
@@ -115,7 +116,7 @@ public class RestIntegrationTest {
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                get("/bai/" + baiId).
+                get("/" + BAI_RESOURCE + "/" + baiId).
         then().
                 statusCode(Response.Status.OK.getStatusCode()).
                 body(BAI_ID_JSON_FIELD, equalTo(baiId));
@@ -123,14 +124,14 @@ public class RestIntegrationTest {
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                delete("/bai/" + baiId).
+                delete("/" + BAI_RESOURCE + "/" + baiId).
         then().
                 statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                get("/bai/" + baiId).
+                get("/" + BAI_RESOURCE + "/" + baiId).
         then().
                 statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
@@ -138,17 +139,14 @@ public class RestIntegrationTest {
 
     @Test
     public void postAndGetBankTransfer() throws Exception {
-        String accountNumber = "1234";
-        String bankNumber = "56789";
-        String bankName = "My eco bank";
         String baiReturnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildBaiJson(accountNumber, bankNumber, bankName)).
+                        body(buildBaiJson()).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/bai").
+                post("/" + BAI_RESOURCE).
                         body().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
@@ -164,7 +162,7 @@ public class RestIntegrationTest {
                         body(buildTransferJson(subject, amount, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/transfer").
+                post("/" + TRANSFER_RESOURCE).
                         body().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
@@ -173,7 +171,7 @@ public class RestIntegrationTest {
         given().
                 contentType(MediaType.APPLICATION_JSON).
         when().
-                get("/transfer/" + transferId).
+                get("/" + TRANSFER_RESOURCE + "/" + transferId).
         then().
                 statusCode(Response.Status.OK.getStatusCode()).
                 body(SUBJECT_JSON_FIELD, equalTo(subject)).
@@ -185,33 +183,27 @@ public class RestIntegrationTest {
 
     @Test
     public void postAndDeleteBankTransfer() throws Exception {
-        String accountNumber = "1234";
-        String bankNumber = "56789";
-        String bankName = "My eco bank";
         String baiReturnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildBaiJson(accountNumber, bankNumber, bankName)).
+                        body(buildBaiJson()).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/bai").
+                post("/" + BAI_RESOURCE).
                         body().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
 
-        String amount = "142.23";
-        String subject = "Bill Number 01257091725";
-
         String transferReturnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson(subject, amount, baiId)).
+                        body(buildTransferJson("Bill Number 01257091725", "142.23", baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/transfer").
+                post("/" + TRANSFER_RESOURCE).
                         body().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
@@ -220,23 +212,22 @@ public class RestIntegrationTest {
         given().
                 contentType(MediaType.APPLICATION_JSON).
         when().
-                get("/transfer/" + transferId).
+                get("/" + TRANSFER_RESOURCE + "/" + transferId).
         then().
                 statusCode(Response.Status.OK.getStatusCode());
         given().
                 contentType(MediaType.APPLICATION_JSON).
         when().
-                delete("/transfer/" + transferId).
+                delete("/" + TRANSFER_RESOURCE + "/" + transferId).
         then().
                 statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
         given().
                 contentType(MediaType.APPLICATION_JSON).
         when().
-                get("/transfer/" + transferId).
+                get("/" + TRANSFER_RESOURCE + "/" + transferId).
         then().
                 statusCode(Response.Status.NOT_FOUND.getStatusCode());
-
     }
 
     private String buildTransferJson(final String subject, final String amount, final String baiId) {
@@ -245,6 +236,10 @@ public class RestIntegrationTest {
                 put(AMOUNT_JSON_FIELD, amount).
                 put(BAI_ID_JSON_FIELD, baiId).
                 toString();
+    }
+
+    private String buildBaiJson() {
+        return buildBaiJson("1234", "56789", "My eco bank");
     }
 
     private String buildBaiJson(final String accountNumber, final String bankNumber, final String bankName) {
