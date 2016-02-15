@@ -81,7 +81,7 @@ public class SpringIntegrationTest {
     public void writeTransferInfoTest() {
         BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
-        TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312", baiId);
+        TransferInfo transferInfo = createTransferInfo(baiId);
 
         String transferId = transferInfoService.createTransferInformation(transferInfo).getTransferId();
         assertNotNull(transferId);
@@ -92,11 +92,11 @@ public class SpringIntegrationTest {
         BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
 
-        TransferInfo transferInfoDbImplTransient = createTransferInfo("142.43", "Bill number 08012312", baiId);
+        TransferInfo transferInfoDbImplTransient = createTransferInfo(baiId);
         String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
         assertNotNull(transferId);
 
-        TransferInfo expected = createTransferInfo("142.43", "Bill number 08012312", baiId);
+        TransferInfo expected = createTransferInfo(baiId);
         compareTransferInfo(expected, transferInfoService.findTransferInfo(transferId));
     }
 
@@ -105,7 +105,7 @@ public class SpringIntegrationTest {
         BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
         String baiId = writeBai(baiDbImpl);
 
-        TransferInfo transferInfoDbImplTransient = createTransferInfo("142.43", "Bill number 08012312", baiId);
+        TransferInfo transferInfoDbImplTransient = createTransferInfo(baiId);
         String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
         assertNotNull(transferId);
 
@@ -114,6 +114,10 @@ public class SpringIntegrationTest {
         transferInfoService.deleteTransferInformation(transferId);
 
         assertNull(transferInfoService.findTransferInfo(transferId));
+    }
+
+    private TransferInfo createTransferInfo(final String baiId) {
+        return createTransferInfo("142.43", "Bill number 08012312", baiId);
     }
 
     private TransferInfo createTransferInfo(final String amount, final String subject, final String baiId) {
