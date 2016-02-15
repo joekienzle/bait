@@ -2,8 +2,10 @@ package org.bait.integration;
 
 import org.bait.config.SpringConfig;
 import org.bait.model.Bai;
+import org.bait.model.TransferInfo;
 import org.bait.rest.BaitResource;
 import org.bait.service.BaiService;
+import org.bait.service.TransferInfoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,43 +28,34 @@ public class SpringIntegrationTest {
     private BaiService baiService;
 
     @Autowired
+    private TransferInfoService transferInfoService;
+
+    @Autowired
     private BaitResource baitResource;
 
     @Test
-    public void baiServiceWriteAndReadTest() {
+    public void baiServiceWriteAndReadBaiTest() {
         Bai bai = createBai("accountNumber" + createUuid(), "bankNumber" + createUuid(), "bankName" + createUuid());
-        Bai persistedBai = baiService.createBankAccountInformation(bai);
-        assertNotNull(persistedBai);
-        String baiId = persistedBai.getBaiId();
-        assertNotNull(baiId);
+        String baiId = writeBai(bai);
         compareBai(bai, baiService.findBankAccountInformation(baiId));
     }
 
     @Test
-    public void baiServiceMultipleWriteAndReadTest() {
+    public void baiServiceMultipleWriteAndReadBaiTest() {
         Bai baiOne = createBai("accountNumberOne" + createUuid(), "bankNumberOne" + createUuid(), "bankNameOne" + createUuid());
-        Bai persistedBaiOne = baiService.createBankAccountInformation(baiOne);
-        assertNotNull(persistedBaiOne);
-        String baiOneId = persistedBaiOne.getBaiId();
-        assertNotNull(baiOneId);
+        String baiOneId = writeBai(baiOne);
 
         Bai baiTwo = createBai("accountNumberTwo" + createUuid(), "bankNumberTwo" + createUuid(), "bankNameTwo" + createUuid());
-        Bai persistedBaiTwo = baiService.createBankAccountInformation(baiTwo);
-        assertNotNull(persistedBaiTwo);
-        String baiTwoId = persistedBaiTwo.getBaiId();
-        assertNotNull(baiTwoId);
+        String baiTwoId = writeBai(baiTwo);
 
         compareBai(baiOne, baiService.findBankAccountInformation(baiOneId));
         compareBai(baiTwo, baiService.findBankAccountInformation(baiTwoId));
     }
 
     @Test
-    public void baiServiceWriteAndDeleteTest() {
+    public void baiServiceWriteAndDeleteBaiTest() {
         Bai bai = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
-        Bai persistedBai = baiService.createBankAccountInformation(bai);
-        assertNotNull(persistedBai);
-        String baiId = persistedBai.getBaiId();
-        assertNotNull(baiId);
+        String baiId = writeBai(bai);
         compareBai(bai, baiService.findBankAccountInformation(baiId));
 
         baiService.deleteBankAccountInformation(baiId);
@@ -76,11 +69,46 @@ public class SpringIntegrationTest {
     }
 
     @Test
-    public void baiResourceWriteTest() {
+    public void baiResourceWriteBaiTest() {
         Bai bai = createBai("123456", "7890", "my bank name");
 
         Response response = baitResource.createBaiInfo(bai);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+    }
+
+    @Test
+    public void transferInfoServiceWriteTransferTest() {
+        Bai bai = createBai("1234", "56789", "My Bank");
+        String baiId = writeBai(bai);
+
+        TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312");
+        String transferId = transferInfoService.createTransferInformation(transferInfo, baiId).getTransferId();
+        assertNotNull(transferId);
+    }
+
+    @Test
+    public void transferInfoServiceWriteAndReadTransferTest() {
+        Bai bai = createBai("1234", "56789", "My Bank");
+        String baiId = writeBai(bai);
+
+        TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312");
+        String transferId = transferInfoService.createTransferInformation(transferInfo, baiId).getTransferId();
+        assertNotNull(transferId);
+
+        compareTransferInfo(transferInfo, transferInfoService.findTransferInfo(baiId, transferId));
+    }
+
+    private TransferInfo createTransferInfo(String amount, String subject) {
+        TransferInfo transferInfo = new TransferInfo();
+        transferInfo.setAmount(amount);
+        transferInfo.setSubject(subject);
+        return transferInfo;
+    }
+
+    private void compareTransferInfo(TransferInfo expected, TransferInfo actual) {
+        assertEquals(expected.getAmount(), actual.getAmount());
+        assertEquals(expected.getSubject(), actual.getSubject());
+        compareBai(expected.getBai(), actual.getBai());
     }
 
     private String createUuid() {
@@ -93,6 +121,14 @@ public class SpringIntegrationTest {
         bai.setBankNumber(bankNumber);
         bai.setBankName(bankName);
         return bai;
+    }
+
+    private String writeBai(Bai bai) {
+        Bai persistedBai = baiService.createBankAccountInformation(bai);
+        assertNotNull(persistedBai);
+        String baiId = persistedBai.getBaiId();
+        assertNotNull(baiId);
+        return baiId;
     }
 
     private void compareBai(final Bai expected, final Bai actual) {
