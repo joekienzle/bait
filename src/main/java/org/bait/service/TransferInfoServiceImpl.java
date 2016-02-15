@@ -1,8 +1,6 @@
 package org.bait.service;
 
-import org.bait.db.BaiRepository;
 import org.bait.db.TransferInfoRepository;
-import org.bait.model.Bai;
 import org.bait.model.TransferInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -13,17 +11,13 @@ public class TransferInfoServiceImpl implements TransferInfoService {
 
     private TransferInfoRepository transferInfoRepository;
 
-    private BaiRepository baiRepository;
-
     @Override
-    public TransferInfo createTransferInformation(TransferInfo transferInfo, String baiId) {
-        Bai bai = baiRepository.findOne(baiId);
-        transferInfo.setBai(bai);
+    public TransferInfo createTransferInformation(TransferInfo transferInfo) {
         return transferInfoRepository.save(transferInfo);
     }
 
     @Override
-    public TransferInfo findTransferInfo(String baiId, String transferInfoId) {
+    public TransferInfo findTransferInfo(String transferInfoId) {
         return null;
     }
 
@@ -34,9 +28,4 @@ public class TransferInfoServiceImpl implements TransferInfoService {
         this.transferInfoRepository = transferInfoRepository;
     }
 
-    @Autowired
-    @Required
-    public void setBaiRepository(final BaiRepository baiRepository) {
-        this.baiRepository = baiRepository;
-    }
 }

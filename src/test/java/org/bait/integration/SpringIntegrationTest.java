@@ -82,7 +82,7 @@ public class SpringIntegrationTest {
         String baiId = writeBai(bai);
 
         TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312");
-        String transferId = transferInfoService.createTransferInformation(transferInfo, baiId).getTransferId();
+        String transferId = transferInfoService.createTransferInformation(transferInfo).getTransferId();
         assertNotNull(transferId);
     }
 
@@ -92,10 +92,10 @@ public class SpringIntegrationTest {
         String baiId = writeBai(bai);
 
         TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312");
-        String transferId = transferInfoService.createTransferInformation(transferInfo, baiId).getTransferId();
+        String transferId = transferInfoService.createTransferInformation(transferInfo).getTransferId();
         assertNotNull(transferId);
 
-        compareTransferInfo(transferInfo, transferInfoService.findTransferInfo(baiId, transferId));
+        compareTransferInfo(transferInfo, transferInfoService.findTransferInfo(transferId));
     }
 
     private TransferInfo createTransferInfo(String amount, String subject) {

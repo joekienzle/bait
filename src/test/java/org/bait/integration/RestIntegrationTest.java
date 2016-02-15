@@ -162,10 +162,10 @@ public class RestIntegrationTest {
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson(subject, amount)).
+                        body(buildTransferJson(subject, amount, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + baiId + "/transfer").
+                post("/transfer").
                         body().asString();
 
         final String transferId = from(baiReturnJson).get(TRANSFER_ID_JSON_FIELD);
@@ -174,7 +174,7 @@ public class RestIntegrationTest {
         given().
                 contentType(MediaType.APPLICATION_JSON).
         when().
-                get("/"+ baiId + "/transfer/" + transferId).
+                get("/transfer/" + transferId).
         then().
                 statusCode(Response.Status.OK.getStatusCode()).
                 body(SUBJECT_JSON_FIELD, equalTo(subject)).
@@ -184,10 +184,11 @@ public class RestIntegrationTest {
 
     }
 
-    private String buildTransferJson(String subject, String amount) {
+    private String buildTransferJson(String subject, String amount, String baiId) {
         return jsonNodeFactory.objectNode().
                 put(SUBJECT_JSON_FIELD, subject).
                 put(AMOUNT_JSON_FIELD, amount).
+                put(BAI_ID_JSON_FIELD, baiId).
                 toString();
     }
 
