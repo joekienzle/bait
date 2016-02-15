@@ -27,6 +27,12 @@ public class RestIntegrationTest {
 
     public static final String BANK_NAME_JSON_FIELD = "bankName";
 
+    public static final String AMOUNT_JSON_FIELD = "amount";
+
+    public static final String SUBJECT_JSON_FIELD = "subject";
+
+    public static final String TRANSFER_ID_JSON_FIELD = "transferId";
+
     public static JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
 
     @Before
@@ -129,6 +135,60 @@ public class RestIntegrationTest {
         then().
                 statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
+    }
+
+    @Test
+    public void postAndGetBankTransfer() throws Exception {
+        String accountNumber = "1234";
+        String bankNumber = "56789";
+        String bankName = "My eco bank";
+        String baiReturnJson =
+                given().
+                        contentType(MediaType.APPLICATION_JSON).
+                when().
+                        body(buildBaiJson(accountNumber, bankNumber, bankName)).
+                then().
+                        statusCode(Response.Status.CREATED.getStatusCode()).
+                post().
+                        body().asString();
+
+        final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
+        assertNotNull(baiId);
+
+        String amount = "142.23";
+        String subject = "Bill Number 01257091725";
+
+        String transferReturnJson =
+                given().
+                        contentType(MediaType.APPLICATION_JSON).
+                when().
+                        body(buildTransferJson(subject, amount)).
+                then().
+                        statusCode(Response.Status.CREATED.getStatusCode()).
+                post("/" + baiId + "/transfer").
+                        body().asString();
+
+        final String transferId = from(baiReturnJson).get(TRANSFER_ID_JSON_FIELD);
+        assertNotNull(transferId);
+
+        given().
+                contentType(MediaType.APPLICATION_JSON).
+        when().
+                get("/"+ baiId + "/transfer/" + transferId).
+        then().
+                statusCode(Response.Status.OK.getStatusCode()).
+                body(SUBJECT_JSON_FIELD, equalTo(subject)).
+                body(AMOUNT_JSON_FIELD, equalTo(amount)).
+                body(TRANSFER_ID_JSON_FIELD, equalTo(transferId)).
+                body(BAI_ID_JSON_FIELD, equalTo(baiId));
+
+    }
+
+    private String buildTransferJson(String subject, String amount) {
+        return jsonNodeFactory.objectNode().
+                put(SUBJECT_JSON_FIELD, subject).
+                put(AMOUNT_JSON_FIELD, amount).
+                toString();
     }
 
     private String buildBaiJson(String accountNumber, String bankNumber, String bankName) {
