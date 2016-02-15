@@ -36,7 +36,7 @@ public class RestIntegrationTest {
 
     @Before
     public void setUp() {
-        RestAssured.basePath = "/api/bai";
+        RestAssured.basePath = "/api";
         RestAssured.port = 7070;
     }
 
@@ -46,7 +46,7 @@ public class RestIntegrationTest {
             contentType(MediaType.APPLICATION_JSON).
         when().
              body(buildBaiJson("1234", "56789", "My eco bank")).
-             post().
+             post("/bai").
         then().
             statusCode(Response.Status.CREATED.getStatusCode()).
             body(BAI_ID_JSON_FIELD, not(isEmptyOrNullString()));
@@ -57,7 +57,7 @@ public class RestIntegrationTest {
         given().
             accept(MediaType.APPLICATION_JSON).
         when().
-            get("/" + UUID.randomUUID().toString()).
+            get("/bai/" + UUID.randomUUID().toString()).
         then().
             statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
@@ -75,7 +75,7 @@ public class RestIntegrationTest {
                  body(buildBaiJson(accountNumber, bankNumber, bankName)).
             then().
                 statusCode(Response.Status.CREATED.getStatusCode()).
-            post().
+            post("/bai").
                 body().asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
@@ -84,7 +84,7 @@ public class RestIntegrationTest {
         given().
             accept(MediaType.APPLICATION_JSON).
         when().
-            get("/" + baiId).
+            get("/bai/" + baiId).
         then().
             statusCode(Response.Status.OK.getStatusCode()).
             body(BAI_ID_JSON_FIELD, equalTo(baiId)).
@@ -106,7 +106,7 @@ public class RestIntegrationTest {
                         body(buildBaiJson(accountNumber, bankNumber, bankName)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post()
+                post("/bai")
                         .asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
@@ -115,7 +115,7 @@ public class RestIntegrationTest {
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                get("/" + baiId).
+                get("/bai/" + baiId).
         then().
                 statusCode(Response.Status.OK.getStatusCode()).
                 body(BAI_ID_JSON_FIELD, equalTo(baiId));
@@ -123,14 +123,14 @@ public class RestIntegrationTest {
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                delete("/" + baiId).
+                delete("/bai/" + baiId).
         then().
                 statusCode(Response.Status.NO_CONTENT.getStatusCode());
 
         given().
                 accept(MediaType.APPLICATION_JSON).
         when().
-                get("/" + baiId).
+                get("/bai/" + baiId).
         then().
                 statusCode(Response.Status.NOT_FOUND.getStatusCode());
 
@@ -148,7 +148,7 @@ public class RestIntegrationTest {
                         body(buildBaiJson(accountNumber, bankNumber, bankName)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post().
+                post("/bai").
                         body().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
@@ -167,7 +167,7 @@ public class RestIntegrationTest {
                 post("/transfer").
                         body().asString();
 
-        final String transferId = from(baiReturnJson).get(TRANSFER_ID_JSON_FIELD);
+        final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
         assertNotNull(transferId);
 
         given().
