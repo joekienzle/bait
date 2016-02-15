@@ -1,44 +1,25 @@
-package org.bait.db.model;
+package org.bait.rest.model;
 
 import org.bait.model.Bai;
 import org.bait.model.TransferInfo;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name="TransferInfo")
-public class TransferInfoDbImpl implements TransferInfo {
-
-    @ManyToOne(targetEntity = BaiDbImpl.class)
-    private Bai bai;
-
-    @Id
-    @Column(name="transferId")
-    @GeneratedValue(generator="hibernate-uuid")
-    @GenericGenerator(name="hibernate-uuid", strategy = "uuid2")
-    private String transferId;
+public class TransferInfoJsonImpl implements TransferInfo {
+    private String baiId;
 
     private String subject;
 
+    private String transferId;
+
     private String amount;
-
-    public Bai getBai() {
-        return bai;
-    }
-
-    public void setBai(Bai bai) {
-        this.bai = bai;
-    }
 
     @Override
     public String getBaiId() {
-        return getBai().getBaiId();
+        return baiId;
     }
 
     @Override
     public void setBaiId(String baiId) {
-        this.bai.setBaiId(baiId);
+        this.baiId = baiId;
     }
 
     @Override

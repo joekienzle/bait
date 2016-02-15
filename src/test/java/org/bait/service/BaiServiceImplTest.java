@@ -2,6 +2,7 @@ package org.bait.service;
 
 import org.bait.db.BaiRepository;
 import org.bait.db.model.BaiDbImpl;
+import org.bait.model.Bai;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -11,12 +12,11 @@ public class BaiServiceImplTest {
     @Test
     public void repositoryIsInvokedOnCreate() {
         BaiServiceImpl baiService = new BaiServiceImpl();
-        BaiDbImpl baiDbImplMock = mock(BaiDbImpl.class);
         BaiRepository baiRepository = mock(BaiRepository.class);
         baiService.setBaiRepository(baiRepository);
 
-        baiService.createBankAccountInformation(baiDbImplMock);
-        verify(baiRepository, times(1)).save(baiDbImplMock);
+        baiService.createBankAccountInformation(mock(BaiDbImpl.class));
+        verify(baiRepository, times(1)).save(any(BaiDbImpl.class));
     }
 
     @Test

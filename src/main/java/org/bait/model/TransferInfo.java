@@ -1,11 +1,13 @@
 package org.bait.model;
 
 public interface TransferInfo {
-    Bai getBai();
+    String getBaiId();
 
-    void setBai(Bai bai);
+    void setBaiId(String baiId);
 
     String getTransferId();
+
+    void setTransferId(String transferId);
 
     String getSubject();
 

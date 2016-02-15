@@ -2,7 +2,9 @@
 package org.bait.rs;
 
 import org.bait.db.model.TransferInfoDbImpl;
+import org.bait.model.TransferInfo;
 import org.bait.rest.TransferResource;
+import org.bait.rest.model.TransferInfoJsonImpl;
 import org.bait.service.TransferInfoService;
 import org.junit.Test;
 
@@ -19,13 +21,14 @@ public class TransferResourceTest {
     public void createTransferInfo() {
         TransferResource transferResource = new TransferResource();
         TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
-        TransferInfoDbImpl transferInfoDbImplMock = mock(TransferInfoDbImpl.class);
-        when(transferInfoServiceMock.createTransferInformation(transferInfoDbImplMock)).thenReturn(transferInfoDbImplMock);
+        TransferInfo transferInfoMock = mock(TransferInfo.class);
+        TransferInfoJsonImpl transferInfoJsonMock = mock(TransferInfoJsonImpl.class);
+        when(transferInfoServiceMock.createTransferInformation(transferInfoJsonMock)).thenReturn(transferInfoMock);
         transferResource.setTransferInfoService(transferInfoServiceMock);
-        Response response = transferResource.createTransferInfo(transferInfoDbImplMock);
+        Response response = transferResource.createTransferInfo(transferInfoJsonMock);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
-        verify(transferInfoServiceMock, times(1)).createTransferInformation(transferInfoDbImplMock);
+        verify(transferInfoServiceMock, times(1)).createTransferInformation(transferInfoJsonMock);
     }
 
     @Test
