@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.bait.model.Bai;
 import org.bait.rest.model.BaiJsonImpl;
 import org.bait.rest.service.BaiModelConverter;
-import org.bait.service.BaiService;
+import org.bait.service.api.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;

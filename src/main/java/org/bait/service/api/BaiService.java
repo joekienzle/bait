@@ -1,4 +1,4 @@
-package org.bait.service;
+package org.bait.service.api;
 
 import org.bait.model.Bai;
 

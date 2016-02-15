@@ -3,6 +3,7 @@ package org.bait.service;
 import org.bait.db.BaiRepository;
 import org.bait.db.model.BaiDbImpl;
 import org.bait.model.Bai;
+import org.bait.service.api.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;

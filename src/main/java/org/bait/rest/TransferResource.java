@@ -2,11 +2,10 @@ package org.bait.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.model.TransferInfo;
 import org.bait.rest.model.TransferInfoJsonImpl;
 import org.bait.rest.service.TransferInfoModelConverter;
-import org.bait.service.TransferInfoService;
+import org.bait.service.api.TransferInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;

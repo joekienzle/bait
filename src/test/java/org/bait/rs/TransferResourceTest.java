@@ -5,7 +5,7 @@ import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.model.TransferInfo;
 import org.bait.rest.TransferResource;
 import org.bait.rest.model.TransferInfoJsonImpl;
-import org.bait.service.TransferInfoService;
+import org.bait.service.api.TransferInfoService;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;

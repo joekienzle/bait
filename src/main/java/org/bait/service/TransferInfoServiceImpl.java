@@ -4,6 +4,7 @@ import org.bait.db.TransferInfoRepository;
 import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.model.Bai;
 import org.bait.model.TransferInfo;
+import org.bait.service.api.TransferInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;

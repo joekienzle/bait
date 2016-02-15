@@ -3,7 +3,7 @@ package org.bait.rs;
 import org.bait.model.Bai;
 import org.bait.rest.BaitResource;
 import org.bait.rest.model.BaiJsonImpl;
-import org.bait.service.BaiService;
+import org.bait.service.api.BaiService;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
