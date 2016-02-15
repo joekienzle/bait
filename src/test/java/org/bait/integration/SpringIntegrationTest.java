@@ -91,11 +91,17 @@ public class SpringIntegrationTest {
         Bai bai = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(bai);
 
-        TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312");
-        String transferId = transferInfoService.createTransferInformation(transferInfo).getTransferId();
+        Bai baiTransient = new Bai();
+        baiTransient.setBaiId(baiId);
+
+        TransferInfo transferInfoTransient = createTransferInfo("142.43", "Bill number 08012312");
+        transferInfoTransient.setBai(baiTransient);
+        String transferId = transferInfoService.createTransferInformation(transferInfoTransient).getTransferId();
         assertNotNull(transferId);
 
-        compareTransferInfo(transferInfo, transferInfoService.findTransferInfo(transferId));
+        TransferInfo expected = createTransferInfo("142.43", "Bill number 08012312");
+        expected.setBai(bai);
+        compareTransferInfo(expected, transferInfoService.findTransferInfo(transferId));
     }
 
     private TransferInfo createTransferInfo(String amount, String subject) {

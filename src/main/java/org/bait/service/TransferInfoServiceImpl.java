@@ -18,7 +18,7 @@ public class TransferInfoServiceImpl implements TransferInfoService {
 
     @Override
     public TransferInfo findTransferInfo(String transferInfoId) {
-        return null;
+        return transferInfoRepository.findOne(transferInfoId);
     }
 
     @Override

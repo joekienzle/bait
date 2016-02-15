@@ -24,6 +24,10 @@ public class Bai {
         return baiId;
     }
 
+    public void setBaiId(final String baiId) {
+        this.baiId = baiId;
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
