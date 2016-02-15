@@ -25,7 +25,7 @@ public class BaiServiceImpl implements BaiService {
         return new BaiDbImpl();
     }
 
-    public static BaiDbImpl createTransient(Bai bai) {
+    public static BaiDbImpl createTransient(final Bai bai) {
         BaiDbImpl baiDbImpl = new BaiDbImpl();
         baiDbImpl.setAccountNumber(bai.getAccountNumber());
         baiDbImpl.setBankNumber(bai.getBankNumber());

@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.bait.model.TransferInfo;
 import org.bait.rest.model.TransferInfoJsonImpl;
-import org.bait.rest.service.TransferInfoModelConverter;
 import org.bait.service.api.TransferInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -29,7 +28,7 @@ public class TransferResource {
             response = TransferInfoJsonImpl.class)
     public Response createTransferInfo(final TransferInfoJsonImpl transferInfo) {
         TransferInfo createdTransferInfo = transferInfoService.createTransferInformation(transferInfo);
-        return Response.status(Response.Status.CREATED).entity(TransferInfoModelConverter.convert(createdTransferInfo)).build();
+        return Response.status(Response.Status.CREATED).entity(convertToJson(createdTransferInfo)).build();
     }
 
     @Path("/{transferInfoId}")
@@ -43,7 +42,7 @@ public class TransferResource {
         if (transferInfo == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(TransferInfoModelConverter.convert(transferInfo)).build();
+        return Response.ok().entity(convertToJson(transferInfo)).build();
     }
 
     @Path("/{transferInfoId}")
@@ -52,6 +51,15 @@ public class TransferResource {
     public Response deleteTransferInfo(@PathParam("transferInfoId") final String transferInfoId) {
         transferInfoService.deleteTransferInformation(transferInfoId);
         return Response.noContent().build();
+    }
+
+    public static TransferInfoJsonImpl convertToJson(final TransferInfo transferInfo) {
+        TransferInfoJsonImpl transferInfoJson = new TransferInfoJsonImpl();
+        transferInfoJson.setTransferId(transferInfo.getTransferId());
+        transferInfoJson.setAmount(transferInfo.getAmount());
+        transferInfoJson.setSubject(transferInfo.getSubject());
+        transferInfoJson.setBaiId(transferInfo.getBaiId());
+        return transferInfoJson;
     }
 
     @Required

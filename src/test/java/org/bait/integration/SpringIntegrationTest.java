@@ -116,7 +116,7 @@ public class SpringIntegrationTest {
         assertNull(transferInfoService.findTransferInfo(transferId));
     }
 
-    private TransferInfo createTransferInfo(String amount, String subject, String baiId) {
+    private TransferInfo createTransferInfo(final String amount, final String subject, final String baiId) {
         TransferInfoJsonImpl transferInfoJson = new TransferInfoJsonImpl();
         transferInfoJson.setAmount(amount);
         transferInfoJson.setSubject(subject);
@@ -124,7 +124,7 @@ public class SpringIntegrationTest {
         return transferInfoJson;
     }
 
-    private void compareTransferInfo(TransferInfo expected, TransferInfo actual) {
+    private void compareTransferInfo(final TransferInfo expected, final TransferInfo actual) {
         assertEquals(expected.getAmount(), actual.getAmount());
         assertEquals(expected.getSubject(), actual.getSubject());
         assertEquals(expected.getBaiId(), actual.getBaiId());
@@ -142,7 +142,7 @@ public class SpringIntegrationTest {
         return baiJsonImpl;
     }
 
-    private String writeBai(BaiJsonImpl baiDbImpl) {
+    private String writeBai(final BaiJsonImpl baiDbImpl) {
         Bai persistedBaiDbImpl = baiService.createBankAccountInformation(baiDbImpl);
         assertNotNull(persistedBaiDbImpl);
         String baiId = persistedBaiDbImpl.getBaiId();

@@ -17,7 +17,7 @@ public class TransferInfoJsonImpl implements TransferInfo {
     }
 
     @Override
-    public void setBaiId(String baiId) {
+    public void setBaiId(final String baiId) {
         this.baiId = baiId;
     }
 
@@ -27,7 +27,7 @@ public class TransferInfoJsonImpl implements TransferInfo {
     }
 
     @Override
-    public void setTransferId(String transferId) {
+    public void setTransferId(final String transferId) {
         this.transferId = transferId;
     }
 
@@ -37,7 +37,7 @@ public class TransferInfoJsonImpl implements TransferInfo {
     }
 
     @Override
-    public void setSubject(String subject) {
+    public void setSubject(final String subject) {
         this.subject = subject;
     }
 
@@ -47,7 +47,7 @@ public class TransferInfoJsonImpl implements TransferInfo {
     }
 
     @Override
-    public void setAmount(String amount) {
+    public void setAmount(final String amount) {
         this.amount = amount;
     }
 }
