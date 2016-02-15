@@ -2,11 +2,11 @@ package org.bait.rs;
 
 import org.bait.model.Bai;
 import org.bait.rest.BaitResource;
-import org.bait.service.BaiService;
+import org.bait.rest.model.BaiJsonImpl;
+import org.bait.service.api.BaiService;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
@@ -19,12 +19,13 @@ public class BaitResourceTest {
         BaitResource baitResource = new BaitResource();
         BaiService baiServiceMock = mock(BaiService.class);
         Bai baiMock = mock(Bai.class);
-        when(baiServiceMock.createBankAccountInformation(baiMock)).thenReturn(baiMock);
+        when(baiServiceMock.createBankAccountInformation(any(Bai.class))).thenReturn(baiMock);
         baitResource.setBaiService(baiServiceMock);
-        Response response = baitResource.createBaiInfo(baiMock);
+        BaiJsonImpl baiJsonImplMock = mock(BaiJsonImpl.class);
+        Response response = baitResource.createBaiInfo(baiJsonImplMock);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
-        verify(baiServiceMock, times(1)).createBankAccountInformation(baiMock);
+        verify(baiServiceMock, times(1)).createBankAccountInformation(baiJsonImplMock);
     }
 
     @Test
