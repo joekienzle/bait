@@ -8,6 +8,7 @@ import org.bait.rest.model.BaiJsonImpl;
 import org.bait.rest.model.TransferInfoJsonImpl;
 import org.bait.service.BaiService;
 import org.bait.service.TransferInfoService;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,7 @@ public class SpringIntegrationTest {
     }
 
     @Test
-    public void writeTransferTest() {
+    public void writeTransferInfoTest() {
         BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
         TransferInfo transferInfo = createTransferInfo("142.43", "Bill number 08012312", baiId);
@@ -88,7 +89,7 @@ public class SpringIntegrationTest {
     }
 
     @Test
-    public void writeAndReadTransferTest() {
+    public void writeAndReadTransferInfoTest() {
         BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
 
@@ -98,6 +99,22 @@ public class SpringIntegrationTest {
 
         TransferInfo expected = createTransferInfo("142.43", "Bill number 08012312", baiId);
         compareTransferInfo(expected, transferInfoService.findTransferInfo(transferId));
+    }
+
+    @Test
+    public void writeAndDeleteTransferInfoTest() {
+        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
+        String baiId = writeBai(baiDbImpl);
+
+        TransferInfo transferInfoDbImplTransient = createTransferInfo("142.43", "Bill number 08012312", baiId);
+        String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
+        assertNotNull(transferId);
+
+        assertNotNull(transferInfoService.findTransferInfo(transferId));
+
+        transferInfoService.deleteTransferInformation(transferId);
+
+        assertNull(transferInfoService.findTransferInfo(transferId));
     }
 
     private TransferInfo createTransferInfo(String amount, String subject, String baiId) {

@@ -27,7 +27,7 @@ public class TransferResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Creates a new reference to transfer information",
-            response = TransferInfoDbImpl.class)
+            response = TransferInfoJsonImpl.class)
     public Response createTransferInfo(final TransferInfoJsonImpl transferInfo) {
         TransferInfo createdTransferInfo = transferInfoService.createTransferInformation(transferInfo);
         return Response.status(Response.Status.CREATED).entity(TransferInfoModelConverter.convert(createdTransferInfo)).build();
@@ -37,14 +37,22 @@ public class TransferResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
-            value = "Get the bank account information by ID",
-            response = TransferInfoDbImpl.class)
+            value = "Get the transfer information by ID",
+            response = TransferInfoJsonImpl.class)
     public Response getTransferInfo(@PathParam("transferInfoId") final String transferInfoId) {
         TransferInfo transferInfo = transferInfoService.findTransferInfo(transferInfoId);
         if (transferInfo == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok().entity(TransferInfoModelConverter.convert(transferInfo)).build();
+    }
+
+    @Path("/{transferInfoId}")
+    @DELETE
+    @ApiOperation(value = "Delete transfer information by ID")
+    public Response deleteTransferInfo(@PathParam("transferInfoId") final String transferInfoId) {
+        transferInfoService.deleteTransferInformation(transferInfoId);
+        return Response.noContent().build();
     }
 
     @Required

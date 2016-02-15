@@ -7,6 +7,7 @@ import org.bait.model.TransferInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TransferInfoServiceImpl implements TransferInfoService {
@@ -14,6 +15,7 @@ public class TransferInfoServiceImpl implements TransferInfoService {
     private TransferInfoRepository transferInfoRepository;
 
     @Override
+    @Transactional
     public TransferInfo createTransferInformation(TransferInfo transferInfo) {
         TransferInfoDbImpl transferInfoTransient = createTransient(transferInfo);
         Bai baiTransient = BaiServiceImpl.createTransient();
@@ -32,6 +34,12 @@ public class TransferInfoServiceImpl implements TransferInfoService {
     @Override
     public TransferInfoDbImpl findTransferInfo(String transferInfoId) {
         return transferInfoRepository.findOne(transferInfoId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTransferInformation(String transferId) {
+        transferInfoRepository.deleteByTransferId(transferId);
     }
 
     @Autowired

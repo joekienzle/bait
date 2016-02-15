@@ -57,4 +57,15 @@ public class TransferResourceTest {
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
         verify(transferInfoServiceMock, times(1)).findTransferInfo(transferInfoId);
     }
+
+    @Test
+    public void deleteTransferInfo() {
+        TransferResource transferResource = new TransferResource();
+        TransferInfoService transferInfoService = mock(TransferInfoService.class);
+        String transferInfoId = UUID.randomUUID().toString();
+        transferResource.setTransferInfoService(transferInfoService);
+        Response response = transferResource.deleteTransferInfo(transferInfoId);
+        assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
+        verify(transferInfoService, times(1)).deleteTransferInformation(transferInfoId);
+    }
 }

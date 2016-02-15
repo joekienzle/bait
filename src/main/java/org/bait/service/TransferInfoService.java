@@ -7,4 +7,5 @@ public interface TransferInfoService {
 
     TransferInfo findTransferInfo(String transferInfoId);
 
+    void deleteTransferInformation(String transferId);
 }
