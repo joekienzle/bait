@@ -1,5 +1,6 @@
 package org.bait.integration;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.jayway.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +27,7 @@ public class RestIntegrationTest {
 
     public static final String BANK_NAME_JSON_FIELD = "bankName";
 
-    public static final String AMOUNT_JSON_FIELD = "amount";
-
-    public static final String SUBJECT_JSON_FIELD = "subject";
-
-    public static final String TRANSFER_ID_JSON_FIELD = "transferId";
+    public static JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
 
     @Before
     public void setUp() {
@@ -135,8 +132,10 @@ public class RestIntegrationTest {
     }
 
     private String buildBaiJson(String accountNumber, String bankNumber, String bankName) {
-        return String.format("{\"%s\":\"%s\", \"%s\":\"%s\", \"%s\":\"%s\"}",   ACCOUNT_NUMBER_JSON_FIELD, accountNumber,
-                BANK_NUMBER_JSON_FIELD, bankNumber,
-                BANK_NAME_JSON_FIELD, bankName);
+        return jsonNodeFactory.objectNode().
+                put(ACCOUNT_NUMBER_JSON_FIELD, accountNumber).
+                put(BANK_NUMBER_JSON_FIELD, bankNumber).
+                put(BANK_NAME_JSON_FIELD, bankName).
+                toString();
     }
 }
