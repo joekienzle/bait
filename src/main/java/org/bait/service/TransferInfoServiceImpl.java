@@ -17,7 +17,7 @@ public class TransferInfoServiceImpl implements TransferInfoService {
 
     @Override
     @Transactional
-    public TransferInfo createTransferInformation(TransferInfo transferInfo) {
+    public TransferInfo createTransferInformation(final TransferInfo transferInfo) {
         TransferInfoDbImpl transferInfoTransient = createTransient(transferInfo);
         Bai baiTransient = BaiServiceImpl.createTransient();
         baiTransient.setBaiId(transferInfo.getBaiId());
@@ -25,7 +25,7 @@ public class TransferInfoServiceImpl implements TransferInfoService {
         return transferInfoRepository.save(transferInfoTransient);
     }
 
-    public static TransferInfoDbImpl createTransient(TransferInfo transferInfo) {
+    public static TransferInfoDbImpl createTransient(final TransferInfo transferInfo) {
         TransferInfoDbImpl transferInfoTransient = new TransferInfoDbImpl();
         transferInfoTransient.setSubject(transferInfo.getSubject());
         transferInfoTransient.setAmount(transferInfo.getAmount());
@@ -33,13 +33,13 @@ public class TransferInfoServiceImpl implements TransferInfoService {
     }
 
     @Override
-    public TransferInfoDbImpl findTransferInfo(String transferInfoId) {
+    public TransferInfoDbImpl findTransferInfo(final String transferInfoId) {
         return transferInfoRepository.findOne(transferInfoId);
     }
 
     @Override
     @Transactional
-    public void deleteTransferInformation(String transferId) {
+    public void deleteTransferInformation(final String transferId) {
         transferInfoRepository.deleteByTransferId(transferId);
     }
 

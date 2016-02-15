@@ -17,7 +17,7 @@ public class BaiJsonImpl implements Bai {
     }
 
     @Override
-    public void setBaiId(String baiId) {
+    public void setBaiId(final String baiId) {
         this.baiId = baiId;
     }
 
@@ -27,7 +27,7 @@ public class BaiJsonImpl implements Bai {
     }
 
     @Override
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(final String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -37,7 +37,7 @@ public class BaiJsonImpl implements Bai {
     }
 
     @Override
-    public void setBankNumber(String bankNumber) {
+    public void setBankNumber(final String bankNumber) {
         this.bankNumber = bankNumber;
     }
 
@@ -47,7 +47,7 @@ public class BaiJsonImpl implements Bai {
     }
 
     @Override
-    public void setBankName(String bankName) {
+    public void setBankName(final String bankName) {
         this.bankName = bankName;
     }
 }

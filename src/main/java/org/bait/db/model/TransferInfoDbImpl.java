@@ -27,7 +27,7 @@ public class TransferInfoDbImpl implements TransferInfo {
         return bai;
     }
 
-    public void setBai(Bai bai) {
+    public void setBai(final Bai bai) {
         this.bai = bai;
     }
 
@@ -37,7 +37,7 @@ public class TransferInfoDbImpl implements TransferInfo {
     }
 
     @Override
-    public void setBaiId(String baiId) {
+    public void setBaiId(final String baiId) {
         this.bai.setBaiId(baiId);
     }
 
@@ -47,7 +47,7 @@ public class TransferInfoDbImpl implements TransferInfo {
     }
 
     @Override
-    public void setTransferId(String transferId) {
+    public void setTransferId(final String transferId) {
         this.transferId = transferId;
     }
 
@@ -57,7 +57,7 @@ public class TransferInfoDbImpl implements TransferInfo {
     }
 
     @Override
-    public void setSubject(String subject) {
+    public void setSubject(final String subject) {
         this.subject = subject;
     }
 
@@ -67,7 +67,7 @@ public class TransferInfoDbImpl implements TransferInfo {
     }
 
     @Override
-    public void setAmount(String amount) {
+    public void setAmount(final String amount) {
         this.amount = amount;
     }
 }

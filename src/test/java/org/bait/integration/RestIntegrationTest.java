@@ -239,7 +239,7 @@ public class RestIntegrationTest {
 
     }
 
-    private String buildTransferJson(String subject, String amount, String baiId) {
+    private String buildTransferJson(final String subject, final String amount, final String baiId) {
         return jsonNodeFactory.objectNode().
                 put(SUBJECT_JSON_FIELD, subject).
                 put(AMOUNT_JSON_FIELD, amount).
@@ -247,7 +247,7 @@ public class RestIntegrationTest {
                 toString();
     }
 
-    private String buildBaiJson(String accountNumber, String bankNumber, String bankName) {
+    private String buildBaiJson(final String accountNumber, final String bankNumber, final String bankName) {
         return jsonNodeFactory.objectNode().
                 put(ACCOUNT_NUMBER_JSON_FIELD, accountNumber).
                 put(BANK_NUMBER_JSON_FIELD, bankNumber).

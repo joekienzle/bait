@@ -4,7 +4,7 @@ import org.bait.model.TransferInfo;
 import org.bait.rest.model.TransferInfoJsonImpl;
 
 public class TransferInfoModelConverter {
-    public static TransferInfoJsonImpl convert(TransferInfo transferInfo) {
+    public static TransferInfoJsonImpl convert(final TransferInfo transferInfo) {
         TransferInfoJsonImpl transferInfoJson = new TransferInfoJsonImpl();
         transferInfoJson.setTransferId(transferInfo.getTransferId());
         transferInfoJson.setAmount(transferInfo.getAmount());
