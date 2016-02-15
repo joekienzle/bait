@@ -5,6 +5,7 @@ import org.bait.db.model.BaiDbImpl;
 import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.model.Bai;
 import org.bait.rest.BaitResource;
+import org.bait.rest.model.BaiJsonImpl;
 import org.bait.service.BaiService;
 import org.bait.service.TransferInfoService;
 import org.junit.Test;
@@ -35,17 +36,17 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiServiceWriteAndReadBaiTest() {
-        BaiDbImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber" + createUuid(), "bankName" + createUuid());
+        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber" + createUuid(), "bankName" + createUuid());
         String baiId = writeBai(baiDbImpl);
         compareBai(baiDbImpl, baiService.findBankAccountInformation(baiId));
     }
 
     @Test
     public void baiServiceMultipleWriteAndReadBaiTest() {
-        BaiDbImpl baiDbImplOne = createBai("accountNumberOne" + createUuid(), "bankNumberOne" + createUuid(), "bankNameOne" + createUuid());
+        BaiJsonImpl baiDbImplOne = createBai("accountNumberOne" + createUuid(), "bankNumberOne" + createUuid(), "bankNameOne" + createUuid());
         String baiOneId = writeBai(baiDbImplOne);
 
-        BaiDbImpl baiDbImplTwo = createBai("accountNumberTwo" + createUuid(), "bankNumberTwo" + createUuid(), "bankNameTwo" + createUuid());
+        BaiJsonImpl baiDbImplTwo = createBai("accountNumberTwo" + createUuid(), "bankNumberTwo" + createUuid(), "bankNameTwo" + createUuid());
         String baiTwoId = writeBai(baiDbImplTwo);
 
         compareBai(baiDbImplOne, baiService.findBankAccountInformation(baiOneId));
@@ -54,7 +55,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiServiceWriteAndDeleteBaiTest() {
-        BaiDbImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
+        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
         String baiId = writeBai(baiDbImpl);
         compareBai(baiDbImpl, baiService.findBankAccountInformation(baiId));
 
@@ -64,13 +65,13 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiServiceFindNoBai() {
-        BaiDbImpl loadedBaiDbImpl = baiService.findBankAccountInformation(createUuid());
+        Bai loadedBaiDbImpl = baiService.findBankAccountInformation(createUuid());
         assertNull(loadedBaiDbImpl);
     }
 
     @Test
     public void baiResourceWriteBaiTest() {
-        BaiDbImpl baiDbImpl = createBai("123456", "7890", "my bank name");
+        BaiJsonImpl baiDbImpl = createBai("123456", "7890", "my bank name");
 
         Response response = baitResource.createBaiInfo(baiDbImpl);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
@@ -78,7 +79,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void transferInfoServiceWriteTransferTest() {
-        BaiDbImpl baiDbImpl = createBai("1234", "56789", "My Bank");
+        BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
 
         TransferInfoDbImpl transferInfoDbImpl = createTransferInfo("142.43", "Bill number 08012312");
@@ -88,7 +89,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void transferInfoServiceWriteAndReadTransferTest() {
-        BaiDbImpl baiDbImpl = createBai("1234", "56789", "My Bank");
+        BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
         String baiId = writeBai(baiDbImpl);
 
         BaiDbImpl baiDbImplTransient = new BaiDbImpl();
@@ -121,16 +122,16 @@ public class SpringIntegrationTest {
         return UUID.randomUUID().toString();
     }
 
-    private BaiDbImpl createBai(final String accountNumber, final  String bankNumber, final  String bankName) {
-        BaiDbImpl baiDbImpl = new BaiDbImpl();
-        baiDbImpl.setAccountNumber(accountNumber);
-        baiDbImpl.setBankNumber(bankNumber);
-        baiDbImpl.setBankName(bankName);
-        return baiDbImpl;
+    private BaiJsonImpl createBai(final String accountNumber, final  String bankNumber, final  String bankName) {
+        BaiJsonImpl baiJsonImpl = new BaiJsonImpl();
+        baiJsonImpl.setAccountNumber(accountNumber);
+        baiJsonImpl.setBankNumber(bankNumber);
+        baiJsonImpl.setBankName(bankName);
+        return baiJsonImpl;
     }
 
-    private String writeBai(BaiDbImpl baiDbImpl) {
-        BaiDbImpl persistedBaiDbImpl = baiService.createBankAccountInformation(baiDbImpl);
+    private String writeBai(BaiJsonImpl baiDbImpl) {
+        Bai persistedBaiDbImpl = baiService.createBankAccountInformation(baiDbImpl);
         assertNotNull(persistedBaiDbImpl);
         String baiId = persistedBaiDbImpl.getBaiId();
         assertNotNull(baiId);

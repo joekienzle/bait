@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BaiRepository extends JpaRepository<BaiDbImpl, String> {
 
-    BaiDbImpl save(BaiDbImpl persisted);
+    BaiDbImpl save(BaiDbImpl baiTransient);
 
     BaiDbImpl findOne(String baiId);
 

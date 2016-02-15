@@ -21,7 +21,6 @@ public class TransferInfoServiceImpl implements TransferInfoService {
         return transferInfoRepository.findOne(transferInfoId);
     }
 
-    @Override
     @Autowired
     @Required
     public void setTransferInfoRepository(final TransferInfoRepository transferInfoRepository) {

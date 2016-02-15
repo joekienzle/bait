@@ -8,5 +8,4 @@ public interface TransferInfoService {
 
     TransferInfoDbImpl findTransferInfo(String transferInfoId);
 
-    void setTransferInfoRepository(TransferInfoRepository transferInfoRepository);
 }

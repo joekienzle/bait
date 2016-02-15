@@ -1,14 +1,12 @@
 package org.bait.service;
 
 import org.bait.db.BaiRepository;
-import org.bait.db.model.BaiDbImpl;
+import org.bait.model.Bai;
 
 public interface BaiService {
-    BaiDbImpl createBankAccountInformation(BaiDbImpl baiDbImpl);
+    Bai createBankAccountInformation(Bai bai);
 
-    BaiDbImpl findBankAccountInformation(String baiId);
-
-    void setBaiRepository(BaiRepository baiRepository);
+    Bai findBankAccountInformation(String baiId);
 
     void deleteBankAccountInformation(String baiId);
 }
