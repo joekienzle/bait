@@ -38,7 +38,7 @@ public class TransferInfoDbImpl implements TransferInfo {
 
     @Override
     public void setBaiId(final String baiId) {
-        this.bai.setBaiId(baiId);
+        // Should not be needed
     }
 
     @Override
