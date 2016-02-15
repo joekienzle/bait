@@ -1,8 +1,10 @@
 package org.bait.rs;
 
 import org.bait.model.Bai;
+import org.bait.model.TransferInfo;
 import org.bait.rest.BaitResource;
 import org.bait.service.BaiService;
+import org.bait.service.TransferInfoService;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
@@ -64,5 +66,49 @@ public class BaitResourceTest {
         Response response = baitResource.deleteBaiInfo(baiId);
         assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
         verify(baiServiceMock, times(1)).deleteBankAccountInformation(baiId);
+    }
+
+    @Test
+    public void createTransferInfo() {
+        BaitResource baitResource = new BaitResource();
+        TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
+        String baiId = UUID.randomUUID().toString();
+        TransferInfo transferInfoMock = mock(TransferInfo.class);
+        when(transferInfoServiceMock.createTransferInformation(transferInfoMock, baiId)).thenReturn(transferInfoMock);
+        baitResource.setTransferInfoService(transferInfoServiceMock);
+        Response response = baitResource.createTransferInfo(baiId, transferInfoMock);
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        assertNotNull(response.getEntity());
+        verify(transferInfoServiceMock, times(1)).createTransferInformation(transferInfoMock, baiId);
+    }
+
+    @Test
+    public void getTransferInfo() {
+        BaitResource baitResource = new BaitResource();
+        TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
+        String baiId = UUID.randomUUID().toString();
+        String transferInfoId = UUID.randomUUID().toString();
+        TransferInfo transferInfoMock = mock(TransferInfo.class);
+        when(transferInfoServiceMock.findTransferInfo(baiId, transferInfoId)).thenReturn(transferInfoMock);
+        baitResource.setTransferInfoService(transferInfoServiceMock);
+
+        Response response = baitResource.getTransferInfo(baiId, transferInfoId);
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        assertNotNull(response.getEntity());
+        verify(transferInfoServiceMock, times(1)).findTransferInfo(baiId, transferInfoId);
+    }
+
+    @Test
+    public void getNoTransferInfo() {
+        BaitResource baitResource = new BaitResource();
+        TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
+        String baiId = UUID.randomUUID().toString();
+        String transferInfoId = UUID.randomUUID().toString();
+        when(transferInfoServiceMock.findTransferInfo(baiId, transferInfoId)).thenReturn(null);
+        baitResource.setTransferInfoService(transferInfoServiceMock);
+
+        Response response = baitResource.getTransferInfo(baiId, transferInfoId);
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
+        verify(transferInfoServiceMock, times(1)).findTransferInfo(baiId, transferInfoId);
     }
 }
