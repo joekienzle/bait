@@ -1,14 +1,15 @@
 package org.bait.db;
 
+import org.bait.db.model.BaiDbImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BaiRepository extends JpaRepository<BaiImpl, String> {
+public interface BaiRepository extends JpaRepository<BaiDbImpl, String> {
 
-    BaiImpl save(BaiImpl persisted);
+    BaiDbImpl save(BaiDbImpl persisted);
 
-    BaiImpl findOne(String baiId);
+    BaiDbImpl findOne(String baiId);
 
     void deleteByBaiId(String baiId);
 

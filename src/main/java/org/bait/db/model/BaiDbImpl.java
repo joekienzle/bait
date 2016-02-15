@@ -1,12 +1,13 @@
-package org.bait.db;
+package org.bait.db.model;
 
+import org.bait.model.Bai;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="Bai")
-public class BaiImpl {
+public class BaiDbImpl implements Bai {
 
     @Id
     @Column(name="baiId")
@@ -20,34 +21,42 @@ public class BaiImpl {
 
     private String bankName;
 
+    @Override
     public String getBaiId() {
         return baiId;
     }
 
+    @Override
     public void setBaiId(final String baiId) {
         this.baiId = baiId;
     }
 
+    @Override
     public String getAccountNumber() {
         return accountNumber;
     }
 
+    @Override
     public void setAccountNumber(final String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
+    @Override
     public String getBankNumber() {
         return bankNumber;
     }
 
+    @Override
     public void setBankNumber(final String bankNumber) {
         this.bankNumber = bankNumber;
     }
 
+    @Override
     public String getBankName() {
         return bankName;
     }
 
+    @Override
     public void setBankName(final String bankName) {
         this.bankName = bankName;
     }

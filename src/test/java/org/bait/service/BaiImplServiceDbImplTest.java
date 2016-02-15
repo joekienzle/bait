@@ -1,22 +1,22 @@
 package org.bait.service;
 
 import org.bait.db.BaiRepository;
-import org.bait.db.BaiImpl;
+import org.bait.db.model.BaiDbImpl;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-public class BaiImplServiceImplTest {
+public class BaiImplServiceDbImplTest {
 
     @Test
     public void repositoryIsInvokedOnCreate() {
         BaiService baiService = new BaiServiceImpl();
-        BaiImpl baiImplMock = mock(BaiImpl.class);
+        BaiDbImpl baiDbImplMock = mock(BaiDbImpl.class);
         BaiRepository baiRepository = mock(BaiRepository.class);
         baiService.setBaiRepository(baiRepository);
 
-        baiService.createBankAccountInformation(baiImplMock);
-        verify(baiRepository, times(1)).save(baiImplMock);
+        baiService.createBankAccountInformation(baiDbImplMock);
+        verify(baiRepository, times(1)).save(baiDbImplMock);
     }
 
     @Test

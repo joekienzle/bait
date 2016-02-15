@@ -1,6 +1,6 @@
 package org.bait.service;
 
-import org.bait.db.BaiImpl;
+import org.bait.db.model.BaiDbImpl;
 import org.bait.db.BaiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -14,12 +14,12 @@ public class BaiServiceImpl implements BaiService {
 
     @Override
     @Transactional
-    public BaiImpl createBankAccountInformation(final BaiImpl baiImpl) {
-        return baiRepository.save(baiImpl);
+    public BaiDbImpl createBankAccountInformation(final BaiDbImpl baiDbImpl) {
+        return baiRepository.save(baiDbImpl);
     }
 
     @Override
-    public BaiImpl findBankAccountInformation(final String baiId) {
+    public BaiDbImpl findBankAccountInformation(final String baiId) {
         return baiRepository.findOne(baiId);
     }
 

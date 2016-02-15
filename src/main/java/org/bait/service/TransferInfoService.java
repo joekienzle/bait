@@ -1,12 +1,12 @@
 package org.bait.service;
 
 import org.bait.db.TransferInfoRepository;
-import org.bait.db.TransferInfoImpl;
+import org.bait.db.model.TransferInfoDbImpl;
 
 public interface TransferInfoService {
-    TransferInfoImpl createTransferInformation(TransferInfoImpl transferInfoImpl);
+    TransferInfoDbImpl createTransferInformation(TransferInfoDbImpl transferInfoDbImpl);
 
-    TransferInfoImpl findTransferInfo(String transferInfoId);
+    TransferInfoDbImpl findTransferInfo(String transferInfoId);
 
     void setTransferInfoRepository(TransferInfoRepository transferInfoRepository);
 }

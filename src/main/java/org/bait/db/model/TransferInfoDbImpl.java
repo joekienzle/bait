@@ -1,15 +1,16 @@
-package org.bait.db;
+package org.bait.db.model;
 
+import org.bait.model.Bai;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="TransferInfo")
-public class TransferInfoImpl {
+public class TransferInfoDbImpl implements org.bait.model.TransferInfo {
 
-    @ManyToOne(targetEntity = BaiImpl.class)
-    private BaiImpl baiImpl;
+    @ManyToOne(targetEntity = BaiDbImpl.class)
+    private Bai bai;
 
     @Id
     @Column(name="transferId")
@@ -21,30 +22,37 @@ public class TransferInfoImpl {
 
     private String amount;
 
-    public BaiImpl getBaiImpl() {
-        return baiImpl;
+    @Override
+    public Bai getBai() {
+        return bai;
     }
 
-    public void setBaiImpl(BaiImpl baiImpl) {
-        this.baiImpl = baiImpl;
+    @Override
+    public void setBai(Bai bai) {
+        this.bai = bai;
     }
 
+    @Override
     public String getTransferId() {
         return transferId;
     }
 
+    @Override
     public String getSubject() {
         return subject;
     }
 
+    @Override
     public void setSubject(String subject) {
         this.subject = subject;
     }
 
+    @Override
     public String getAmount() {
         return amount;
     }
 
+    @Override
     public void setAmount(String amount) {
         this.amount = amount;
     }

@@ -1,7 +1,7 @@
 
 package org.bait.rs;
 
-import org.bait.db.TransferInfoImpl;
+import org.bait.db.model.TransferInfoDbImpl;
 import org.bait.rest.TransferResource;
 import org.bait.service.TransferInfoService;
 import org.junit.Test;
@@ -19,13 +19,13 @@ public class TransferResourceTest {
     public void createTransferInfo() {
         TransferResource transferResource = new TransferResource();
         TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
-        TransferInfoImpl transferInfoImplMock = mock(TransferInfoImpl.class);
-        when(transferInfoServiceMock.createTransferInformation(transferInfoImplMock)).thenReturn(transferInfoImplMock);
+        TransferInfoDbImpl transferInfoDbImplMock = mock(TransferInfoDbImpl.class);
+        when(transferInfoServiceMock.createTransferInformation(transferInfoDbImplMock)).thenReturn(transferInfoDbImplMock);
         transferResource.setTransferInfoService(transferInfoServiceMock);
-        Response response = transferResource.createTransferInfo(transferInfoImplMock);
+        Response response = transferResource.createTransferInfo(transferInfoDbImplMock);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
-        verify(transferInfoServiceMock, times(1)).createTransferInformation(transferInfoImplMock);
+        verify(transferInfoServiceMock, times(1)).createTransferInformation(transferInfoDbImplMock);
     }
 
     @Test
@@ -33,8 +33,8 @@ public class TransferResourceTest {
         TransferResource transferResource = new TransferResource();
         TransferInfoService transferInfoServiceMock = mock(TransferInfoService.class);
         String transferInfoId = UUID.randomUUID().toString();
-        TransferInfoImpl transferInfoImplMock = mock(TransferInfoImpl.class);
-        when(transferInfoServiceMock.findTransferInfo(transferInfoId)).thenReturn(transferInfoImplMock);
+        TransferInfoDbImpl transferInfoDbImplMock = mock(TransferInfoDbImpl.class);
+        when(transferInfoServiceMock.findTransferInfo(transferInfoId)).thenReturn(transferInfoDbImplMock);
         transferResource.setTransferInfoService(transferInfoServiceMock);
 
         Response response = transferResource.getTransferInfo(transferInfoId);
