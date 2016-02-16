@@ -3,7 +3,9 @@ package org.bait.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.bait.model.Bai;
-import org.bait.service.BaiService;
+import org.bait.rest.model.BaiJsonImpl;
+import org.bait.service.PreconditionFailedException;
+import org.bait.service.api.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
@@ -24,10 +26,10 @@ public class BaitResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Creates a new reference to bank account information",
-            response = Bai.class)
-    public Response createBaiInfo(final Bai bai) {
-        Bai createdBai = baiService.createBankAccountInformation(bai);
-        return Response.status(Response.Status.CREATED).entity(createdBai).build();
+            response = BaiJsonImpl.class)
+    public Response createBaiInfo(final BaiJsonImpl baiJsonImpl) {
+        Bai createdBai = baiService.createBankAccountInformation(baiJsonImpl);
+        return Response.status(Response.Status.CREATED).entity(convertToJson(createdBai)).build();
     }
 
     @Path("/{baiId}")
@@ -35,20 +37,33 @@ public class BaitResource {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(
             value = "Get the bank account information by ID",
-            response = Bai.class)
+            response = BaiJsonImpl.class)
     public Response findBankAccountInformation(@PathParam("baiId") final  String baiId) {
         Bai bai = baiService.findBankAccountInformation(baiId);
         if (bai == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.ok().entity(bai).build();
+        return Response.ok().entity(convertToJson(bai)).build();
     }
 
     @Path("/{baiId}")
     @DELETE
     public Response deleteBaiInfo(@PathParam("baiId") final String baiId) {
-        baiService.deleteBankAccountInformation(baiId);
+        try {
+            baiService.deleteBankAccountInformation(baiId);
+        } catch (PreconditionFailedException e) {
+            return Response.status(Response.Status.PRECONDITION_FAILED).entity(e.getMessage()).build();
+        }
         return Response.noContent().build();
+    }
+
+    public static BaiJsonImpl convertToJson(final Bai bai) {
+        BaiJsonImpl baiJsonImpl = new BaiJsonImpl();
+        baiJsonImpl.setBaiId(bai.getBaiId());
+        baiJsonImpl.setAccountNumber(bai.getAccountNumber());
+        baiJsonImpl.setBankNumber(bai.getBankNumber());
+        baiJsonImpl.setBankName(bai.getBankName());
+        return baiJsonImpl;
     }
 
     @Required
@@ -56,4 +71,5 @@ public class BaitResource {
     public void setBaiService(final BaiService baiService) {
         this.baiService = baiService;
     }
+
 }

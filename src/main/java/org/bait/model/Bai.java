@@ -1,54 +1,19 @@
 package org.bait.model;
 
-import org.hibernate.annotations.GenericGenerator;
+public interface Bai {
+    String getBaiId();
 
-import javax.persistence.*;
+    void setBaiId(String baiId);
 
-@Entity
-@Table(name="Bai")
-public class Bai {
+    String getAccountNumber();
 
-    @Id
-    @Column(name="baiId")
-    @GeneratedValue(generator="hibernate-uuid")
-    @GenericGenerator(name="hibernate-uuid", strategy = "uuid2")
-    private String baiId;
+    void setAccountNumber(String accountNumber);
 
-    private String accountNumber;
+    String getBankNumber();
 
-    private String bankNumber;
+    void setBankNumber(String bankNumber);
 
-    private String bankName;
+    String getBankName();
 
-    public String getBaiId() {
-        return baiId;
-    }
-
-    public void setBaiId(final String baiId) {
-        this.baiId = baiId;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(final String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public String getBankNumber() {
-        return bankNumber;
-    }
-
-    public void setBankNumber(final String bankNumber) {
-        this.bankNumber = bankNumber;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public void setBankName(final String bankName) {
-        this.bankName = bankName;
-    }
+    void setBankName(String bankName);
 }
