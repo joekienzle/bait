@@ -6,6 +6,7 @@ import org.bait.model.TransferInfo;
 import org.bait.rest.BaitResource;
 import org.bait.rest.model.BaiJsonImpl;
 import org.bait.rest.model.TransferInfoJsonImpl;
+import org.bait.service.PreconditionFailedException;
 import org.bait.service.api.BaiService;
 import org.bait.service.api.TransferInfoService;
 import org.junit.Test;
@@ -19,6 +20,8 @@ import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,7 +57,7 @@ public class SpringIntegrationTest {
     }
 
     @Test
-    public void writeAndDeleteBaiTest() {
+    public void writeAndDeleteBaiTest() throws PreconditionFailedException {
         BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
         String baiId = writeBai(baiDbImpl);
         compareBai(baiDbImpl, baiService.findBankAccountInformation(baiId));
@@ -114,6 +117,34 @@ public class SpringIntegrationTest {
         transferInfoService.deleteTransferInformation(transferId);
 
         assertNull(transferInfoService.findTransferInfo(transferId));
+    }
+
+    @Test
+    public void baiNotDeletableWhenTransferExists() {
+        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
+        String baiId = writeBai(baiDbImpl);
+
+        TransferInfo transferInfoTransient1 = createTransferInfo(baiId);
+        String transferId1 = transferInfoService.createTransferInformation(transferInfoTransient1).getTransferId();
+        assertNotNull(transferId1);
+
+        TransferInfo transferInfoTransient2 = createTransferInfo(baiId);
+        String transferId2 = transferInfoService.createTransferInformation(transferInfoTransient2).getTransferId();
+        assertNotNull(transferId2);
+        assertNotEquals(transferId1, transferId2);
+
+        assertNotNull(baiService.findBankAccountInformation(baiId));
+        boolean exceptionRaised = false;
+        try {
+            baiService.deleteBankAccountInformation(baiId);
+        } catch (PreconditionFailedException e) {
+            String message = e.getMessage();
+            assertTrue(message.contains(transferId1));
+            assertTrue(message.contains(transferId2));
+            exceptionRaised = true;
+        }
+        assertTrue("There should have been an exception raised for violating the foreign key constraint. Bai object still has dependencies.", exceptionRaised);
+        assertNotNull(baiService.findBankAccountInformation(baiId));
     }
 
     private TransferInfo createTransferInfo(final String baiId) {
