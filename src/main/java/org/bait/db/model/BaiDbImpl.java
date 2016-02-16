@@ -70,7 +70,7 @@ public class BaiDbImpl implements Bai {
         return transferInfo;
     }
 
-    public void setTransferInfo(Collection<TransferInfo> transferInfo) {
+    public void setTransferInfo(final Collection<TransferInfo> transferInfo) {
         this.transferInfo = transferInfo;
     }
 }

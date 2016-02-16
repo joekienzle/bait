@@ -74,16 +74,13 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeBaiTest() {
-        BaiJsonImpl baiDbImpl = createBai("123456", "7890", "my bank name");
-
-        Response response = baitResource.createBaiInfo(baiDbImpl);
+        Response response = baitResource.createBaiInfo(createBai("123456", "7890", "my bank name"));
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
     }
 
     @Test
     public void writeTransferInfoTest() {
-        BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
-        String baiId = writeBai(baiDbImpl);
+        String baiId = writeBai(createBai("1234", "56789", "My Bank"));
         TransferInfo transferInfo = createTransferInfo(baiId);
 
         String transferId = transferInfoService.createTransferInformation(transferInfo).getTransferId();
@@ -92,8 +89,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeAndReadTransferInfoTest() {
-        BaiJsonImpl baiDbImpl = createBai("1234", "56789", "My Bank");
-        String baiId = writeBai(baiDbImpl);
+        String baiId = writeBai(createBai("1234", "56789", "My Bank"));
 
         TransferInfo transferInfoDbImplTransient = createTransferInfo(baiId);
         String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
@@ -105,8 +101,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeAndDeleteTransferInfoTest() {
-        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
-        String baiId = writeBai(baiDbImpl);
+        String baiId = writeBai(createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid()));
 
         TransferInfo transferInfoDbImplTransient = createTransferInfo(baiId);
         String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
@@ -121,15 +116,12 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiNotDeletableWhenTransferExists() {
-        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
-        String baiId = writeBai(baiDbImpl);
+        String baiId = writeBai(createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid()));
 
-        TransferInfo transferInfoTransient1 = createTransferInfo(baiId);
-        String transferId1 = transferInfoService.createTransferInformation(transferInfoTransient1).getTransferId();
+        String transferId1 = transferInfoService.createTransferInformation(createTransferInfo(baiId)).getTransferId();
         assertNotNull(transferId1);
 
-        TransferInfo transferInfoTransient2 = createTransferInfo(baiId);
-        String transferId2 = transferInfoService.createTransferInformation(transferInfoTransient2).getTransferId();
+        String transferId2 = transferInfoService.createTransferInformation(createTransferInfo(baiId)).getTransferId();
         assertNotNull(transferId2);
         assertNotEquals(transferId1, transferId2);
 

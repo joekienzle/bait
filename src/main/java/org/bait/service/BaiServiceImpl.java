@@ -17,6 +17,8 @@ import java.util.List;
 @Service
 public class BaiServiceImpl implements BaiService {
 
+    public static final String BAI_CANT_BE_DELETED_MESSAGE = "Bai cannot be deleted. Transfer object '%s' depend upon it. Delete them first in order to delete Bai.";
+
     private BaiRepository baiRepository;
 
     @Override
@@ -48,12 +50,12 @@ public class BaiServiceImpl implements BaiService {
     public void deleteBankAccountInformation(final String baiId) throws PreconditionFailedException {
         BaiDbImpl bai = baiRepository.findOne(baiId);
         Collection<TransferInfo> transferInfoForBai = bai.getTransferInfo();
-        if (transferInfoForBai.size() >= 1) {
+        if (!transferInfoForBai.isEmpty()) {
             List<String> transferIds = new LinkedList<>();
             for (TransferInfo transferInfo : transferInfoForBai) {
                 transferIds.add(transferInfo.getTransferId());
             }
-            throw new PreconditionFailedException(String.format("Bai cannot be deleted. Transfer object '%s' depend upon it. Delete them first in order to delete Bai.", transferIds));
+            throw new PreconditionFailedException(String.format(BAI_CANT_BE_DELETED_MESSAGE, transferIds));
         }
         baiRepository.deleteByBaiId(baiId);
     }

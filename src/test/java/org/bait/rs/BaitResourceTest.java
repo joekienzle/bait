@@ -5,7 +5,11 @@ import org.bait.rest.BaitResource;
 import org.bait.rest.model.BaiJsonImpl;
 import org.bait.service.PreconditionFailedException;
 import org.bait.service.api.BaiService;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.core.Response;
 import java.util.UUID;
@@ -14,15 +18,30 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class BaitResourceTest {
+
+    @Mock
+    private BaiService baiServiceMock;
+
+    @Mock
+    private Bai baiMock;
+
+    @Mock
+    private BaiJsonImpl baiJsonImplMock;
+
+    private BaitResource baitResource;
+
+    @Before
+    public void setUp() {
+        baitResource = new BaitResource();
+        baitResource.setBaiService(baiServiceMock);
+    }
+
     @Test
     public void createBaiInfo() {
-        BaitResource baitResource = new BaitResource();
-        BaiService baiServiceMock = mock(BaiService.class);
-        Bai baiMock = mock(Bai.class);
         when(baiServiceMock.createBankAccountInformation(any(Bai.class))).thenReturn(baiMock);
         baitResource.setBaiService(baiServiceMock);
-        BaiJsonImpl baiJsonImplMock = mock(BaiJsonImpl.class);
         Response response = baitResource.createBaiInfo(baiJsonImplMock);
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getEntity());
@@ -31,10 +50,6 @@ public class BaitResourceTest {
 
     @Test
     public void getBaiInfo() {
-        BaitResource baitResource = new BaitResource();
-        BaiService baiServiceMock = mock(BaiService.class);
-        Bai baiMock = mock(Bai.class);
-        baitResource.setBaiService(baiServiceMock);
         String someId = "someId";
         when(baiServiceMock.findBankAccountInformation(someId)).thenReturn(baiMock);
 
@@ -46,8 +61,6 @@ public class BaitResourceTest {
 
     @Test
     public void getNoBaiInfo() {
-        BaitResource baitResource = new BaitResource();
-        BaiService baiServiceMock = mock(BaiService.class);
         baitResource.setBaiService(baiServiceMock);
         String someId = "someId";
         when(baiServiceMock.findBankAccountInformation(someId)).thenReturn(null);
@@ -59,8 +72,6 @@ public class BaitResourceTest {
 
     @Test
     public void deleteBaiInfo() throws PreconditionFailedException {
-        BaitResource baitResource = new BaitResource();
-        BaiService baiServiceMock = mock(BaiService.class);
         String baiId = UUID.randomUUID().toString();
         baitResource.setBaiService(baiServiceMock);
         Response response = baitResource.deleteBaiInfo(baiId);
@@ -70,8 +81,6 @@ public class BaitResourceTest {
 
     @Test
     public void deleteBaiInfoWithPreconditionFailed() throws PreconditionFailedException {
-        BaitResource baitResource = new BaitResource();
-        BaiService baiServiceMock = mock(BaiService.class);
         final String exceptionMessage = "Something went wrong";
         doThrow(new PreconditionFailedException(exceptionMessage)).when(baiServiceMock).deleteBankAccountInformation(anyString());
         String baiId = UUID.randomUUID().toString();
