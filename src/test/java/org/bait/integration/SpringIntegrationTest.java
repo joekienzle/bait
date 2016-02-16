@@ -28,6 +28,12 @@ import static org.junit.Assert.assertNull;
 @ContextConfiguration(classes = {SpringConfig.class})
 public class SpringIntegrationTest {
 
+    public static final String ACCOUNT_NUMBER_PREFIX = "accountNumber";
+
+    public static final String BANK_NUMBER_PREFIX = "bankNumber";
+
+    public static final String BANK_NAME_PREFIX = "bankName";
+
     @Autowired
     private BaiService baiService;
 
@@ -39,17 +45,17 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeAndReadBaiTest() {
-        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber" + createUuid(), "bankName" + createUuid());
+        BaiJsonImpl baiDbImpl = createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX + createUuid(), BANK_NAME_PREFIX + createUuid());
         String baiId = writeBai(baiDbImpl);
         compareBai(baiDbImpl, baiService.findBankAccountInformation(baiId));
     }
 
     @Test
     public void multipleWriteAndReadBaiTest() {
-        BaiJsonImpl baiDbImplOne = createBai("accountNumberOne" + createUuid(), "bankNumberOne" + createUuid(), "bankNameOne" + createUuid());
+        BaiJsonImpl baiDbImplOne = createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX + createUuid(), BANK_NAME_PREFIX + createUuid());
         String baiOneId = writeBai(baiDbImplOne);
 
-        BaiJsonImpl baiDbImplTwo = createBai("accountNumberTwo" + createUuid(), "bankNumberTwo" + createUuid(), "bankNameTwo" + createUuid());
+        BaiJsonImpl baiDbImplTwo = createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX + createUuid(), BANK_NAME_PREFIX + createUuid());
         String baiTwoId = writeBai(baiDbImplTwo);
 
         compareBai(baiDbImplOne, baiService.findBankAccountInformation(baiOneId));
@@ -58,7 +64,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeAndDeleteBaiTest() throws PreconditionFailedException {
-        BaiJsonImpl baiDbImpl = createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid());
+        BaiJsonImpl baiDbImpl = createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX  + createUuid(), BANK_NAME_PREFIX +  createUuid());
         String baiId = writeBai(baiDbImpl);
         compareBai(baiDbImpl, baiService.findBankAccountInformation(baiId));
 
@@ -101,7 +107,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void writeAndDeleteTransferInfoTest() {
-        String baiId = writeBai(createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid()));
+        String baiId = writeBai(createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX  + createUuid(), BANK_NAME_PREFIX +  createUuid()));
 
         TransferInfo transferInfoDbImplTransient = createTransferInfo(baiId);
         String transferId = transferInfoService.createTransferInformation(transferInfoDbImplTransient).getTransferId();
@@ -116,7 +122,7 @@ public class SpringIntegrationTest {
 
     @Test
     public void baiNotDeletableWhenTransferExists() {
-        String baiId = writeBai(createBai("accountNumber" + createUuid(), "bankNumber"  + createUuid(), "bankName" +  createUuid()));
+        String baiId = writeBai(createBai(ACCOUNT_NUMBER_PREFIX + createUuid(), BANK_NUMBER_PREFIX  + createUuid(), BANK_NAME_PREFIX +  createUuid()));
 
         String transferId1 = transferInfoService.createTransferInformation(createTransferInfo(baiId)).getTransferId();
         assertNotNull(transferId1);

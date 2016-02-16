@@ -32,6 +32,8 @@ public class BaitResourceTest {
 
     private BaitResource baitResource;
 
+    public static final String EXCEPTION_MESSAGE = "Something went wrong";
+
     @Before
     public void setUp() {
         baitResource = new BaitResource();
@@ -81,13 +83,12 @@ public class BaitResourceTest {
 
     @Test
     public void deleteBaiInfoWithPreconditionFailed() throws PreconditionFailedException {
-        final String exceptionMessage = "Something went wrong";
-        doThrow(new PreconditionFailedException(exceptionMessage)).when(baiServiceMock).deleteBankAccountInformation(anyString());
+        doThrow(new PreconditionFailedException(EXCEPTION_MESSAGE)).when(baiServiceMock).deleteBankAccountInformation(anyString());
         String baiId = UUID.randomUUID().toString();
         baitResource.setBaiService(baiServiceMock);
         Response response = baitResource.deleteBaiInfo(baiId);
         assertEquals(Response.Status.PRECONDITION_FAILED.getStatusCode(), response.getStatus());
-        assertEquals(exceptionMessage, response.getEntity());
+        assertEquals(EXCEPTION_MESSAGE, response.getEntity());
         verify(baiServiceMock, times(1)).deleteBankAccountInformation(baiId);
     }
 }

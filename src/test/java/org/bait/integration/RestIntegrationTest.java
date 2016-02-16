@@ -36,6 +36,10 @@ public class RestIntegrationTest {
 
     public static final String TRANSFER_ID_JSON_FIELD = TRANSFER_RESOURCE + "Id";
 
+    public static final String AMOUNT = "142.23";
+    
+    public static final String SUBJECT = "Bill Number 01257091725";
+
     public static JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
 
     @Before
@@ -144,14 +148,11 @@ public class RestIntegrationTest {
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
 
-        String amount = "142.23";
-        String subject = "Bill Number 01257091725";
-
         String transferReturnJson =
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson(subject, amount, baiId)).
+                        body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
                 post("/" + TRANSFER_RESOURCE).
@@ -164,8 +165,8 @@ public class RestIntegrationTest {
                 get("/" + TRANSFER_RESOURCE + "/" + transferId).
         then().
                 statusCode(Response.Status.OK.getStatusCode()).
-                body(SUBJECT_JSON_FIELD, equalTo(subject)).
-                body(AMOUNT_JSON_FIELD, equalTo(amount)).
+                body(SUBJECT_JSON_FIELD, equalTo(SUBJECT)).
+                body(AMOUNT_JSON_FIELD, equalTo(AMOUNT)).
                 body(TRANSFER_ID_JSON_FIELD, equalTo(transferId)).
                 body(BAI_ID_JSON_FIELD, equalTo(baiId));
 
@@ -190,7 +191,7 @@ public class RestIntegrationTest {
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson("Bill Number 01257091725", "142.23", baiId)).
+                        body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
                 post("/" + TRANSFER_RESOURCE).
@@ -234,7 +235,7 @@ public class RestIntegrationTest {
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson("Bill Number 01257091725", "142.23", baiId)).
+                        body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
                 post("/" + TRANSFER_RESOURCE).
@@ -269,7 +270,7 @@ public class RestIntegrationTest {
                 given().
                         contentType(MediaType.APPLICATION_JSON).
                 when().
-                        body(buildTransferJson("Bill Number 01257091725", "142.23", baiId)).
+                        body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
                 post("/" + TRANSFER_RESOURCE).
