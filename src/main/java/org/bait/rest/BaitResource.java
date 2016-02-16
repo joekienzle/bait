@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.bait.model.Bai;
 import org.bait.rest.model.BaiJsonImpl;
+import org.bait.service.PreconditionFailedException;
 import org.bait.service.api.BaiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -48,7 +49,11 @@ public class BaitResource {
     @Path("/{baiId}")
     @DELETE
     public Response deleteBaiInfo(@PathParam("baiId") final String baiId) {
-        baiService.deleteBankAccountInformation(baiId);
+        try {
+            baiService.deleteBankAccountInformation(baiId);
+        } catch (PreconditionFailedException e) {
+            return Response.status(Response.Status.PRECONDITION_FAILED).entity(e.getMessage()).build();
+        }
         return Response.noContent().build();
     }
 

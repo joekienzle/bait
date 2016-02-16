@@ -1,9 +1,11 @@
 package org.bait.db.model;
 
 import org.bait.model.Bai;
+import org.bait.model.TransferInfo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name="Bai")
@@ -20,6 +22,9 @@ public class BaiDbImpl implements Bai {
     private String bankNumber;
 
     private String bankName;
+
+    @OneToMany(targetEntity = TransferInfoDbImpl.class, mappedBy = "bai")
+    private Collection<TransferInfo> transferInfo;
 
     @Override
     public String getBaiId() {
@@ -59,5 +64,13 @@ public class BaiDbImpl implements Bai {
     @Override
     public void setBankName(final String bankName) {
         this.bankName = bankName;
+    }
+
+    public Collection<TransferInfo> getTransferInfo() {
+        return transferInfo;
+    }
+
+    public void setTransferInfo(final Collection<TransferInfo> transferInfo) {
+        this.transferInfo = transferInfo;
     }
 }
