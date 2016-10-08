@@ -6,22 +6,22 @@
 [INFO] 
 [INFO] --- maven-dependency-plugin:2.8:tree (default-cli) @ bait-server ---
 [INFO] org.bait:bait-server:war:1.0.0-SNAPSHOT
-[INFO] +- org.glassfish.jersey.containers:jersey-container-servlet-core:jar:2.22.1:compile
-[INFO] |  +- org.glassfish.hk2.external:javax.inject:jar:2.4.0-b31:compile
-[INFO] |  +- org.glassfish.jersey.core:jersey-common:jar:2.22.1:compile
+[INFO] +- org.glassfish.jersey.containers:jersey-container-servlet-core:jar:2.23.2:compile
+[INFO] |  +- org.glassfish.hk2.external:javax.inject:jar:2.5.0-b05:compile
+[INFO] |  +- org.glassfish.jersey.core:jersey-common:jar:2.23.2:compile
 [INFO] |  |  +- javax.annotation:javax.annotation-api:jar:1.2:compile
-[INFO] |  |  +- org.glassfish.jersey.bundles.repackaged:jersey-guava:jar:2.22.1:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-api:jar:2.4.0-b31:compile
-[INFO] |  |  |  \- org.glassfish.hk2.external:aopalliance-repackaged:jar:2.4.0-b31:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-locator:jar:2.4.0-b31:compile
+[INFO] |  |  +- org.glassfish.jersey.bundles.repackaged:jersey-guava:jar:2.23.2:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-api:jar:2.5.0-b05:compile
+[INFO] |  |  |  \- org.glassfish.hk2.external:aopalliance-repackaged:jar:2.5.0-b05:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-locator:jar:2.5.0-b05:compile
 [INFO] |  |  \- org.glassfish.hk2:osgi-resource-locator:jar:1.0.1:compile
-[INFO] |  +- org.glassfish.jersey.core:jersey-server:jar:2.22.1:compile
-[INFO] |  |  +- org.glassfish.jersey.core:jersey-client:jar:2.22.1:compile
-[INFO] |  |  +- org.glassfish.jersey.media:jersey-media-jaxb:jar:2.22.1:compile
+[INFO] |  +- org.glassfish.jersey.core:jersey-server:jar:2.23.2:compile
+[INFO] |  |  +- org.glassfish.jersey.core:jersey-client:jar:2.23.2:compile
+[INFO] |  |  +- org.glassfish.jersey.media:jersey-media-jaxb:jar:2.23.2:compile
 [INFO] |  |  \- javax.validation:validation-api:jar:1.1.0.Final:compile
 [INFO] |  \- javax.ws.rs:javax.ws.rs-api:jar:2.0.1:compile
-[INFO] +- org.glassfish.jersey.media:jersey-media-json-jackson:jar:2.22.1:runtime
-[INFO] |  +- org.glassfish.jersey.ext:jersey-entity-filtering:jar:2.22.1:runtime
+[INFO] +- org.glassfish.jersey.media:jersey-media-json-jackson:jar:2.23.2:runtime
+[INFO] |  +- org.glassfish.jersey.ext:jersey-entity-filtering:jar:2.23.2:runtime
 [INFO] |  +- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:jar:2.6.7:compile
 [INFO] |  |  +- com.fasterxml.jackson.core:jackson-core:jar:2.6.7:compile
 [INFO] |  |  \- com.fasterxml.jackson.core:jackson-databind:jar:2.6.7:compile
@@ -42,19 +42,19 @@
 [INFO] |  +- org.aspectj:aspectjrt:jar:1.8.9:compile
 [INFO] |  +- org.slf4j:slf4j-api:jar:1.7.21:compile
 [INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.21:runtime
-[INFO] +- org.glassfish.jersey.ext:jersey-spring3:jar:2.22.1:compile
-[INFO] |  +- org.glassfish.hk2:hk2:jar:2.4.0-b31:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-utils:jar:2.4.0-b31:compile
+[INFO] +- org.glassfish.jersey.ext:jersey-spring3:jar:2.23.2:compile
+[INFO] |  +- org.glassfish.hk2:hk2:jar:2.5.0-b05:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-utils:jar:2.5.0-b05:compile
 [INFO] |  |  |  \- javax.inject:javax.inject:jar:1:compile
-[INFO] |  |  +- org.glassfish.hk2:config-types:jar:2.4.0-b31:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-core:jar:2.4.0-b31:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-config:jar:2.4.0-b31:compile
+[INFO] |  |  +- org.glassfish.hk2:config-types:jar:2.5.0-b05:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-core:jar:2.5.0-b05:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-config:jar:2.5.0-b05:compile
 [INFO] |  |  |  +- org.jvnet:tiger-types:jar:1.4:compile
-[INFO] |  |  |  \- org.glassfish.hk2.external:bean-validator:jar:2.4.0-b31:compile
-[INFO] |  |  +- org.glassfish.hk2:hk2-runlevel:jar:2.4.0-b31:compile
-[INFO] |  |  \- org.glassfish.hk2:class-model:jar:2.4.0-b31:compile
-[INFO] |  |     \- org.glassfish.hk2.external:asm-all-repackaged:jar:2.4.0-b31:compile
-[INFO] |  +- org.glassfish.hk2:spring-bridge:jar:2.4.0-b31:compile
+[INFO] |  |  |  \- org.glassfish.hk2.external:bean-validator:jar:2.5.0-b05:compile
+[INFO] |  |  +- org.glassfish.hk2:hk2-runlevel:jar:2.5.0-b05:compile
+[INFO] |  |  \- org.glassfish.hk2:class-model:jar:2.5.0-b05:compile
+[INFO] |  |     \- org.glassfish.hk2.external:asm-all-repackaged:jar:2.5.0-b05:compile
+[INFO] |  +- org.glassfish.hk2:spring-bridge:jar:2.5.0-b05:compile
 [INFO] |  \- org.springframework:spring-web:jar:4.2.8.RELEASE:compile
 [INFO] +- org.hibernate:hibernate-entitymanager:jar:4.3.11.Final:compile
 [INFO] |  +- org.jboss.logging:jboss-logging:jar:3.3.0.Final:compile
@@ -86,7 +86,7 @@
 [INFO] |  |  \- org.reflections:reflections:jar:0.9.9:compile
 [INFO] |  |     +- com.google.guava:guava:jar:17.0:compile
 [INFO] |  |     \- com.google.code.findbugs:annotations:jar:2.0.1:compile
-[INFO] |  \- org.glassfish.jersey.media:jersey-media-multipart:jar:2.22.1:compile
+[INFO] |  \- org.glassfish.jersey.media:jersey-media-multipart:jar:2.23.2:compile
 [INFO] |     \- org.jvnet.mimepull:mimepull:jar:1.9.6:compile
 [INFO] +- com.jayway.restassured:rest-assured:jar:2.8.0:test
 [INFO] |  +- org.codehaus.groovy:groovy:jar:2.4.7:test
@@ -110,7 +110,7 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 7.304 s
-[INFO] Finished at: 2016-10-08T18:18:08+02:00
-[INFO] Final Memory: 19M/239M
+[INFO] Total time: 7.139 s
+[INFO] Finished at: 2016-10-08T19:26:16+02:00
+[INFO] Final Memory: 19M/240M
 [INFO] ------------------------------------------------------------------------
