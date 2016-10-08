@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
 
 @Service
 public class BaiServiceImpl implements BaiService {
@@ -49,13 +50,9 @@ public class BaiServiceImpl implements BaiService {
     @Transactional
     public void deleteBankAccountInformation(final String baiId) throws PreconditionFailedException {
         BaiDbImpl bai = baiRepository.findOne(baiId);
-        Collection<TransferInfo> transferInfoForBai = bai.getTransferInfo();
-        if (!transferInfoForBai.isEmpty()) {
-            List<String> transferIds = new LinkedList<>();
-            for (TransferInfo transferInfo : transferInfoForBai) {
-                transferIds.add(transferInfo.getTransferId());
-            }
-            throw new PreconditionFailedException(String.format(BAI_CANT_BE_DELETED_MESSAGE, transferIds));
+        Collection<String> transferInfoIdsForBai = bai.getTransferInfoIds();
+        if (transferInfoIdsForBai != null && !transferInfoIdsForBai.isEmpty()) {
+            throw new PreconditionFailedException(String.format(BAI_CANT_BE_DELETED_MESSAGE, transferInfoIdsForBai));
         }
         baiRepository.deleteByBaiId(baiId);
     }

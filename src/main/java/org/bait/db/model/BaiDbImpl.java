@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="Bai")
@@ -68,6 +71,10 @@ public class BaiDbImpl implements Bai {
 
     public Collection<TransferInfo> getTransferInfo() {
         return transferInfo;
+    }
+
+    public Collection<String> getTransferInfoIds() {
+        return getTransferInfo().stream().map(TransferInfo::getTransferId).collect(Collectors.toList());
     }
 
     public void setTransferInfo(final Collection<TransferInfo> transferInfo) {
