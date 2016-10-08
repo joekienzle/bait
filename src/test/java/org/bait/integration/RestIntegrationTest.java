@@ -1,7 +1,7 @@
 package org.bait.integration;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,9 +9,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.RestAssured.when;
-import static com.jayway.restassured.path.json.JsonPath.from;
+import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.when;
+import static io.restassured.path.json.JsonPath.from;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.text.IsEmptyString.isEmptyOrNullString;
 import static org.junit.Assert.assertNotNull;
@@ -81,10 +81,10 @@ public class RestIntegrationTest {
                 contentType(MediaType.APPLICATION_JSON).
             when().
                  body(buildBaiJson(accountNumber, bankNumber, bankName)).
+                 post("/" + BAI_RESOURCE).
             then().
                 statusCode(Response.Status.CREATED.getStatusCode()).
-            post("/" + BAI_RESOURCE).
-                body().asString();
+                extract().asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -107,10 +107,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildBaiJson()).
+                        post("/" + BAI_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + BAI_RESOURCE)
-                        .asString();
+                        extract().asString();
 
         final String baiId = from(returnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -140,10 +140,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildBaiJson()).
+                        post("/" + BAI_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + BAI_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -153,10 +153,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
+                        post("/" + TRANSFER_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + TRANSFER_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
         assertNotNull(transferId);
@@ -179,10 +179,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildBaiJson()).
+                        post("/" + BAI_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + BAI_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -192,10 +192,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
+                        post("/" + TRANSFER_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + TRANSFER_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
         assertNotNull(transferId);
@@ -223,10 +223,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildBaiJson()).
+                        post("/" + BAI_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + BAI_RESOURCE).
-                        body().asString();
+                extract().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -236,10 +236,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
+                        post("/" + TRANSFER_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + TRANSFER_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
         assertNotNull(transferId);
@@ -258,10 +258,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildBaiJson()).
+                        post("/" + BAI_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + BAI_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String baiId = from(baiReturnJson).get(BAI_ID_JSON_FIELD);
         assertNotNull(baiId);
@@ -271,10 +271,10 @@ public class RestIntegrationTest {
                         contentType(MediaType.APPLICATION_JSON).
                 when().
                         body(buildTransferJson(SUBJECT, AMOUNT, baiId)).
+                        post("/" + TRANSFER_RESOURCE).
                 then().
                         statusCode(Response.Status.CREATED.getStatusCode()).
-                post("/" + TRANSFER_RESOURCE).
-                        body().asString();
+                        extract().asString();
 
         final String transferId = from(transferReturnJson).get(TRANSFER_ID_JSON_FIELD);
         assertNotNull(transferId);
